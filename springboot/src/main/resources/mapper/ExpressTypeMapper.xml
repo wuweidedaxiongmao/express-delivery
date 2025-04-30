@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.springboot.mapper.ExpressTypeMapper">
+    <select id="selectAll" resultType="com.example.springboot.entity.ExpressType">
+        SELECT * FROM express_type
+            <where>
+                <if test="typeName != null">
+                    type_name like concat('%',#{typeName},'%')
+                </if>
+            </where>
+            order by id asc
+    </select>
+    
+    <insert id="insert" parameterType="com.example.springboot.entity.ExpressType">
+        INSERT INTO `express_type` (`type_name`,`price`,`description`,`created_at`,`updated_at`)
+        VALUES (#{typeName},#{price},#{description},#{createdAt},#{updatedAt})
+    </insert>
+    
+    <update id="updateById" parameterType="com.example.springboot.entity.ExpressType">
+        update `express_type` set type_name=#{typeName},price=#{price},description=#{description},created_at=#{createdAt},updated_at=#{updatedAt}
+        where id=#{id}
+    </update>
+</mapper>
