@@ -22,4 +22,7 @@ public interface StudentMapper {
 	@Delete("delete from student where id=#{id}")
 	void deleteById(Integer id);
 
+	@Select("select * from student where username=#{username}")
+	Student selectByUsername(String username);
+
 }

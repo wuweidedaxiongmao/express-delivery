@@ -7,9 +7,27 @@
         <span style=" font-size: 20px">智能快递代取管理系统</span>
       </div>
       <div style="flex: 1"></div>
-      <div style="width: fit-content;display: flex;align-items: center">
-        <img :src="data.user.avatar || defaultUrl" style="width: 40px;height: 40px; border-radius: 50%"/>
-        <span style="margin-left: 7px;margin-right: 10px">{{data.user.name}}</span>
+<!--      <div style="width: fit-content;display: flex;align-items: center">-->
+<!--        <img :src="data.user.avatar || defaultUrl" style="width: 40px;height: 40px; border-radius: 50%"/>-->
+<!--        <span style="margin-left: 7px;margin-right: 10px">{{data.user.name}}</span>-->
+<!--      </div>-->
+      <!-- 右侧用户区域 -->
+      <div class="header-right">
+        <el-dropdown trigger="click">
+          <div class="user-info">
+            <el-avatar :src="data.user.avatar" :size="35" />
+            <span>{{ data.user.name }}</span>
+            <el-icon><CaretBottom /></el-icon>
+          </div>
+          <template #dropdown>
+            <el-dropdown-menu>
+              <el-dropdown-item @click="router.push('/admin/person')"
+              >个人中心</el-dropdown-item
+              >
+              <el-dropdown-item @click="logout">退出登录</el-dropdown-item>
+            </el-dropdown-menu>
+          </template>
+        </el-dropdown>
       </div>
 
     </div>
@@ -68,6 +86,10 @@ const data=reactive({
   user:JSON.parse(localStorage.getItem('user'))
 })
 
+if(data.user===null||data.user.role!='ADMIN'||data.user.role===null){
+  location.href="/login"
+}
+
 const logout=()=>{
   localStorage.removeItem('user')
   location.href = '/login'
@@ -80,8 +102,24 @@ const updateUser=()=>{
 }
 </script>
 
-<style>
+<style scoped>
 .el-menu .is-active {
   background-color: #e6ecf7;
 }
+
+
+.header-right {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+
 </style>

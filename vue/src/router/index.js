@@ -14,6 +14,12 @@ const router = createRouter({
       component:()=>import('../views/Login.vue')
     },
     {
+      path:'/register',
+      name:'register',
+      meta:{title:'注册'},
+      component:()=>import('../views/Register.vue')
+    },
+    {
       path:'/admin',
       name:'admin',
       meta:{title:'智能快递代取管理系统'},
@@ -22,6 +28,16 @@ const router = createRouter({
           {path:'expressType',name:'expressType',meta:{title:'快递类型'},component:()=>import('../views/admin/ExpressType.vue')},
           {path:'student',name:'student',meta:{title:'学生信息'},component:()=>import('../views/admin/Student.vue')},
 
+      ]
+    },
+    {
+      path:'/student',
+      name:'student',
+      meta:{title: '快递代取系统'},
+      component:()=>import('../views/student/Student.vue'),
+      children:[
+        {path: 'home',name:'home',meta: {title: '首页'},component:()=>import('../views/student/Home.vue')},
+        {path: 'person',name:'person',meta: {title: '个人信息'},component:()=>import('../views/student/Person.vue')},
       ]
     }
   ],

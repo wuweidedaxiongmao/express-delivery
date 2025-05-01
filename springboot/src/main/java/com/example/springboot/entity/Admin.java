@@ -2,36 +2,31 @@ package com.example.springboot.entity;
 
 import java.time.LocalDateTime;
 
-public class Student extends Account{
+public class Admin extends Account{
+
 	private Integer id;
 	private String username;
 	private String password;
 	private String name;
 	private String avatar;
+	private String role;
 	private String phone;
 	private String email;
-	private String role;
-	private Integer level;
-	private Double rating;
-	private Integer orderCount;
 	private LocalDateTime createdAt;
 	private LocalDateTime updatedAt;
 
-	public Student() {
+	public Admin() {
 	}
 
-	public Student(Integer id, String username, String password, String name, String avatar, String phone, String email, String role, Integer level, Double rating, Integer orderCount, LocalDateTime createdAt, LocalDateTime updatedAt) {
+	public Admin(Integer id, String username, String password, String name, String avatar, String role, String phone, String email, LocalDateTime createdAt, LocalDateTime updatedAt) {
 		this.id = id;
 		this.username = username;
 		this.password = password;
 		this.name = name;
 		this.avatar = avatar;
+		this.role = role;
 		this.phone = phone;
 		this.email = email;
-		this.role = role;
-		this.level = level;
-		this.rating = rating;
-		this.orderCount = orderCount;
 		this.createdAt = createdAt;
 		this.updatedAt = updatedAt;
 	}
@@ -118,6 +113,22 @@ public class Student extends Account{
 
 	/**
 	 * 获取
+	 * @return role
+	 */
+	public String getRole() {
+		return role;
+	}
+
+	/**
+	 * 设置
+	 * @param role
+	 */
+	public void setRole(String role) {
+		this.role = role;
+	}
+
+	/**
+	 * 获取
 	 * @return phone
 	 */
 	public String getPhone() {
@@ -146,70 +157,6 @@ public class Student extends Account{
 	 */
 	public void setEmail(String email) {
 		this.email = email;
-	}
-
-	/**
-	 * 获取
-	 * @return role
-	 */
-	public String getRole() {
-		return role;
-	}
-
-	/**
-	 * 设置
-	 * @param role
-	 */
-	public void setRole(String role) {
-		this.role = role;
-	}
-
-	/**
-	 * 获取
-	 * @return level
-	 */
-	public Integer getLevel() {
-		return level;
-	}
-
-	/**
-	 * 设置
-	 * @param level
-	 */
-	public void setLevel(Integer level) {
-		this.level = level;
-	}
-
-	/**
-	 * 获取
-	 * @return rating
-	 */
-	public Double getRating() {
-		return rating;
-	}
-
-	/**
-	 * 设置
-	 * @param rating
-	 */
-	public void setRating(Double rating) {
-		this.rating = rating;
-	}
-
-	/**
-	 * 获取
-	 * @return orderCount
-	 */
-	public Integer getOrderCount() {
-		return orderCount;
-	}
-
-	/**
-	 * 设置
-	 * @param orderCount
-	 */
-	public void setOrderCount(Integer orderCount) {
-		this.orderCount = orderCount;
 	}
 
 	/**
@@ -245,6 +192,6 @@ public class Student extends Account{
 	}
 
 	public String toString() {
-		return "Student{id = " + id + ", username = " + username + ", password = " + password + ", name = " + name + ", avatar = " + avatar + ", phone = " + phone + ", email = " + email + ", role = " + role + ", level = " + level + ", rating = " + rating + ", orderCount = " + orderCount + ", createdAt = " + createdAt + ", updatedAt = " + updatedAt + "}";
+		return "Admin{id = " + id + ", username = " + username + ", password = " + password + ", name = " + name + ", avatar = " + avatar + ", role = " + role + ", phone = " + phone + ", email = " + email + ", createdAt = " + createdAt + ", updatedAt = " + updatedAt + "}";
 	}
 }
