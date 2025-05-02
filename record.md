@@ -275,9 +275,29 @@ update
 
  先简单完成对admin表的后端的增删改查内容，后续再美化
 
+### Express_commission
+
+---
+
+`<el-input-number>`设置精度和placeholder
+
+### Identification
+
+用/files/uploadStuCard专门放置student id card图片，与普通图片做区分
+
+![image-20250502164052039](record.assets/image-20250502164052039.png)
+
+后端identification的审核部分和前端提交identification页面的load,上传部分比较复杂
 
 
 
+### Courier
+
+代取员也有学生这层身份
+
+如果代取员的账号用学生身份登入时候，将localstorge中的user role属性改为STU
+
+动态绑定禁用表单
 
 ## 知识点
 
@@ -305,5 +325,10 @@ update
 
 <el-card style="width: 50%; margin: 0 auto;"/>
 
+### index.js中的path中的name不能重复
 
 
+
+## 创新点
+
+1. 加入ai

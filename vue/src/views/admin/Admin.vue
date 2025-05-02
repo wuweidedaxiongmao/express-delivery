@@ -47,8 +47,9 @@
               <span>用户管理</span>
             </template>
             <el-menu-item index="/admin/expressType">代取类型信息</el-menu-item>
+            <el-menu-item index="/admin/courierCommission">代取员工等级信息</el-menu-item>
             <el-menu-item index="/admin">代取订单信息</el-menu-item>
-            <el-menu-item index="/admin">快递员认证申请</el-menu-item>
+            <el-menu-item index="/admin/identification">快递员认证申请</el-menu-item>
             <el-menu-item index="/admin">快递员提现申请</el-menu-item>
             <el-menu-item index="/admin">快递员解封申</el-menu-item>
             <el-menu-item index="/admin">快递员提升等级申请</el-menu-item>

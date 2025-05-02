@@ -89,6 +89,12 @@ const logout = () => {
 const updateUser=()=>{
   data.user=JSON.parse(localStorage.getItem('user'))
 }
+if(data.user===null||data.user.role===null){
+  location.href="/login"
+}
+if(data.user.role!=='STU'&&data.user.role!='COUR'){
+  location.href='/login'
+}
 </script>
 
 <style scoped>

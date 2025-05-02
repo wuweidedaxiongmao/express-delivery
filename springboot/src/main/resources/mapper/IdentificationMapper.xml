@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.springboot.mapper.IdentificationMapper">
+    <select id="selectAll" resultType="com.example.springboot.entity.Identification">
+        SELECT * FROM identification
+            <where>
+                <if test="name != null">
+                    name like concat('%',#{name},'%')
+                </if>
+            </where>
+            order by id asc
+    </select>
+    
+    <insert id="insert" parameterType="com.example.springboot.entity.Identification">
+        INSERT INTO `identification` (`student_id`,`name`,`image`,`status`,`admin_id`,`created_at`,`updated_at`)
+        VALUES (#{studentId},#{name},#{image},#{status},#{adminId},#{createdAt},#{updatedAt})
+    </insert>
+    
+    <update id="updateById" parameterType="com.example.springboot.entity.Identification">
+        update `identification` set student_id=#{studentId},name=#{name},image=#{image},status=#{status},admin_id=#{adminId},created_at=#{createdAt},updated_at=#{updatedAt}
+        where id=#{id}
+    </update>
+</mapper>

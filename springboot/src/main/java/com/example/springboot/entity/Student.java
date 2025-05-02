@@ -11,9 +11,11 @@ public class Student extends Account{
 	private String phone;
 	private String email;
 	private String role;
-	private Integer level;
-	private Double rating;
-	private Integer orderCount;
+
+	private Integer level; //代取员等级
+	private Double rating; // 平均评分
+	private Integer orderCount;  // 接单数量
+	// 这三个变量只有在role==COUR才有效
 	private LocalDateTime createdAt;
 	private LocalDateTime updatedAt;
 

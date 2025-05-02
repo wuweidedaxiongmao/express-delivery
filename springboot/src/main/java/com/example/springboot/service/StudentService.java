@@ -47,6 +47,7 @@ public class StudentService {
 
 	public void update(Student student) {
 		student.setUpdatedAt(LocalDateTime.now());
+		//id是唯一的，通过id进行更新
 		studentMapper.updateById(student);
 	}
 
@@ -71,9 +72,9 @@ public class StudentService {
 		if(dbStudent==null){
 			throw new CustomException("500","用户不存在");
 		}
-		if(Role.COURIER.equals(dbStudent.getRole())){
-			throw new CustomException("500","you are courier,please choose the courier role!!!");
-		}
+//		if(Role.COURIER.equals(dbStudent.getRole())){
+//			throw new CustomException("500","you are courier,please choose the courier role!!!");
+//		}
 		if(!dbStudent.getPassword().equals(account.getPassword())){
 			throw new CustomException("500","账号或者密码错误");
 		}

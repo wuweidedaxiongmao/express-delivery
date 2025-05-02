@@ -38,6 +38,7 @@ public class WebController {
 			//学生角色
 			login = studentService.login(account);
 			return Result.success((Student)login);
+			//?? 代取员的账号，按理来说也能通过学生身份进入首页
 		}else{
 			throw new CustomException("500","/login接口，角色方面出现问题");
 		}

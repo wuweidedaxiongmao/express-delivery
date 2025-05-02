@@ -21,6 +21,9 @@ import java.util.Map;
 public class FileController {
 	//获取当前项目根路径
 	private static final String filePath=System.getProperty("user.dir")+"/files/";
+	//存储student id card的路径
+	private static final String stuCardPath=System.getProperty("user.dir")+"/files/stu-cards/";
+
 	@PostMapping("/upload")
 	public Result upload(MultipartFile file){ //文件流的形式
 		//获取文件名
@@ -60,6 +63,40 @@ public class FileController {
 		} catch (IOException e) {
 			e.printStackTrace();
 			throw new CustomException("500","文件下载失败");
+		}
+	}
+
+	@PostMapping("/uploadStuCard")
+	public Result uploadStuCard(MultipartFile file) {
+		final String originalFilename = file.getOriginalFilename();
+		if (!FileUtil.isDirectory(stuCardPath)) {
+			FileUtil.mkdir(stuCardPath);
+		}
+		String fileName = System.currentTimeMillis() + "-" + originalFilename;
+		String realPath = stuCardPath + fileName;
+		try {
+			FileUtil.writeBytes(file.getBytes(), realPath);
+		} catch (IOException e) {
+			e.printStackTrace();
+			throw new CustomException("500", "学生证上传失败");
+		}
+		String url = "http://localhost:9091/files/downloadStuCard/"+fileName;
+		return Result.success(url);
+	}
+	@GetMapping("/downloadStuCard/{filename}")
+	public void downloadStuCard(@PathVariable String filename, HttpServletResponse response){
+		try {
+			response.addHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(filename, StandardCharsets.UTF_8));
+			response.setContentType("application/octet-stream");
+			final ServletOutputStream outputStream = response.getOutputStream();
+			String realPath=stuCardPath+filename;
+			final byte[] bytes = FileUtil.readBytes(realPath);
+			outputStream.write(bytes);
+			outputStream.flush();
+			outputStream.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+			throw new CustomException("500","学生证下载失败");
 		}
 	}
 
