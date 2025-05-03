@@ -299,6 +299,48 @@ update
 
 动态绑定禁用表单
 
+### Orders
+
+databasae add 
+
+description varchar(255)
+
+pickup_address varchar(255)
+
+access_time 订单接收时间
+
+delivery_time 订单送达时间
+
+sign_time 订单签收时间
+
+rate 评分
+
+feedback 反馈信息
+
+关联查询
+
+![image-20250503155757450](record.assets/image-20250503155757450.png)
+
+![image-20250503160112990](record.assets/image-20250503160112990.png)
+
+多表查询属性
+
+name,username,typeName,address,
+
+自动生成的属性
+
+status，4个time，
+
+订单签收进行评分和反馈
+
+==查询student/orders功能==
+
+#### 5/3
+
+开发完下单和管理员的订单页面，需要开发接单和地址薄功能
+
+
+
 ## 知识点
 
 ### 设置元素水平居中
@@ -325,7 +367,15 @@ update
 
 <el-card style="width: 50%; margin: 0 auto;"/>
 
-### index.js中的path中的name不能重复
+index.js中的path中的name不能重复
+
+<el-form-item>组件中prop属性用于规则验证
+
+
+
+## 小问题
+
+实体类的get方法名要与数据库中字段名对应，否则会识别不到
 
 
 

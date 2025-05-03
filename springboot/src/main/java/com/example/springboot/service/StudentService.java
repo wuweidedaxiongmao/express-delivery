@@ -72,9 +72,23 @@ public class StudentService {
 		if(dbStudent==null){
 			throw new CustomException("500","用户不存在");
 		}
-//		if(Role.COURIER.equals(dbStudent.getRole())){
-//			throw new CustomException("500","you are courier,please choose the courier role!!!");
-//		}
+		if(Role.COURIER.equals(dbStudent.getRole())){
+			throw new CustomException("500","you are courier,please choose the courier role!!!");
+		}
+		if(!dbStudent.getPassword().equals(account.getPassword())){
+			throw new CustomException("500","账号或者密码错误");
+		}
+		return dbStudent;
+	}
+
+	public Student courierLogin(Account account){
+		Student dbStudent = studentMapper.selectByUsername(account.getUsername());
+		if(dbStudent==null){
+			throw new CustomException("500","用户不存在");
+		}
+		if(Role.STUDENT.equals(dbStudent.getRole())){
+			throw new CustomException("500","你还不是代取员，请先用学生身份登入并认证代取员身份");
+		}
 		if(!dbStudent.getPassword().equals(account.getPassword())){
 			throw new CustomException("500","账号或者密码错误");
 		}

@@ -16,13 +16,13 @@
             class="nav-menu"
             style="background-color: #81aee2;font-weight: bold; height: 80px;margin-left: 10px"
         >
-          <el-menu-item index="/student/home">首页</el-menu-item>
-          <el-menu-item index="/student/orders">代收订单</el-menu-item>
-          <el-menu-item v-if="ifCourier" index="/student/delivery">派送订单</el-menu-item>
-          <el-menu-item index="/student/rank">拼行榜</el-menu-item>
-          <el-menu-item index="/student/news">校园资讯</el-menu-item>
-          <el-menu-item index="/student/logistics">后勤快讯</el-menu-item>
-          <el-menu-item index="/student/person">个人中心</el-menu-item>
+          <el-menu-item index="/courier/home">首页</el-menu-item>
+          <el-menu-item index="/courier/delivery">配送中订单</el-menu-item>
+          <el-menu-item index="/courier/collection">代收订单</el-menu-item>
+          <el-menu-item index="/courier/rank">拼行榜</el-menu-item>
+          <el-menu-item index="/courier/news">校园资讯</el-menu-item>
+          <el-menu-item index="/courier/logistics">后勤快讯</el-menu-item>
+          <el-menu-item index="/courier/person">个人中心</el-menu-item>
         </el-menu>
       </div>
 
@@ -76,10 +76,8 @@ const data = reactive({
   //   name: '大圣搬',
   //   avatar: 'https://example.com/avatar.png'
   // }
-  user:JSON.parse(localStorage.getItem('user')),
+  user:JSON.parse(localStorage.getItem('user'))
 });
-
-const ifCourier=data.user.role==='COUR';
 
 // 退出登录方法
 const logout = () => {

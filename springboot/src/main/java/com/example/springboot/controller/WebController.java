@@ -34,12 +34,15 @@ public class WebController {
 			//管理员角色
 			login=adminService.login(account);
 			return Result.success((Admin)login);
-		}else if(Role.STUDENT.equals(account.getRole())||Role.COURIER.equals(account.getRole())){
+		}else if(Role.STUDENT.equals(account.getRole())){
 			//学生角色
 			login = studentService.login(account);
 			return Result.success((Student)login);
 			//?? 代取员的账号，按理来说也能通过学生身份进入首页
-		}else{
+		}else if(Role.COURIER.equals(account.getRole())) {
+			login = studentService.courierLogin(account);
+			return Result.success((Student)login);
+		} else{
 			throw new CustomException("500","/login接口，角色方面出现问题");
 		}
 	}

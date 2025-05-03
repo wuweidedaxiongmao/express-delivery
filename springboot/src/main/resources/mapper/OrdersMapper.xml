@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.springboot.mapper.OrdersMapper">
+    <select id="selectAll" resultType="com.example.springboot.entity.Orders">
+        SELECT orders.*, s1.name AS studentName, s2.name AS courierName,
+               s1.username AS studentUsername, s2.username AS courierUsername,
+               ex.type_name AS typeName, ex.price AS price
+            FROM orders
+            LEFT JOIN student s1 ON orders.student_id=s1.id
+            LEFT JOIN student s2 ON orders.courier_id=s2.id
+            LEFT JOIN express_type ex ON orders.type_id=ex.id
+            <where>
+                <if test="id != null">
+                    orders.id like concat('%',#{id},'%')
+                </if>
+                <if test="studentId!=null">orders.student_id = #{studentId}</if>
+            </where>
+            order by orders.id asc
+    </select>
+
+    <!-- 插入新订单 -->
+    <insert id="insert" parameterType="com.example.springboot.entity.Orders">
+        INSERT INTO `orders` (
+            student_id,
+            courier_id,
+            type_id,
+            pickup_address,
+            address_id,
+            image,
+            description,
+            status,
+            create_time,
+            access_time,
+            delivery_time,
+            sign_time,
+            rating,
+            feedback
+        ) VALUES (
+                     #{studentId},
+                     #{courierId},
+                     #{typeId},
+                     #{pickupAddress},
+                     #{addressId},
+                     #{image},
+                     #{description},
+                     #{status},
+                     #{createTime},
+                     #{accessTime},
+                     #{deliveryTime},
+                     #{signTime},
+                     #{rating},
+                     #{feedback}
+                 )
+    </insert>
+
+    <!-- 动态更新订单 - null值不会覆盖数据库原有值 -->
+    <update id="updateById" parameterType="com.example.springboot.entity.Orders">
+        UPDATE `orders`
+        <set>
+            <if test="studentId != null">student_id = #{studentId},</if>
+            <if test="courierId != null">courier_id = #{courierId},</if>
+            <if test="typeId != null">type_id = #{typeId},</if>
+            <if test="pickupAddress != null">pickup_address = #{pickupAddress},</if>
+            <if test="addressId != null">address_id = #{addressId},</if>
+            <if test="image != null">image = #{image},</if>
+            <if test="description != null">description = #{description},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="accessTime != null">access_time = #{accessTime},</if>
+            <if test="deliveryTime != null">delivery_time = #{deliveryTime},</if>
+            <if test="signTime != null">sign_time = #{signTime},</if>
+            <if test="rating != null">rating = #{rating},</if>
+            <if test="feedback != null">feedback = #{feedback}</if>
+        </set>
+        WHERE id = #{id}
+    </update>
+</mapper>

@@ -27,10 +27,10 @@
           <p>订单查询</p>
         </el-col>
         <el-col :span="6" class="action-item">
-          <el-button circle size="large" type="success" @click="router.push('/front/support-order')" >
+          <el-button circle size="large" type="success" @click="router.push('/student/order')" >
             <el-icon><Bicycle /></el-icon>
           </el-button>
-          <p>支持下单</p>
+          <p>立刻下单</p>
         </el-col>
         <el-col :span="6" class="action-item">
           <el-button circle size="large" @click="router.push('/student/identification')" type="primary">

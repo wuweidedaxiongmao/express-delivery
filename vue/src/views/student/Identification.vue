@@ -1,31 +1,53 @@
 <template>
   <div class="card-container">
-    <el-card style="width: 50%;margin-top: 20px;">
-      <h2>代取员认证信息</h2>
-      <el-form ref="formRef" :rules="data.rules" :model="data.form" label-width="100px">
+    <el-card style="width: 50%; margin: 20px auto;">
+      <div style="display: flex; flex-direction: column; align-items: center;">
+        <h2>代取员认证申请</h2>
+        <div v-if="data.identification?.status!==null" style="margin-bottom: 20px;">
+          <el-button v-if="data.identification?.status==='Pending'" type="primary" plain>正在审核中</el-button>
+          <el-button v-if="data.identification?.status==='Approved'" type="success" plain>审核通过</el-button>
+          <el-button v-if="data.identification?.status==='Rejected'" type="warning" plain>审核拒绝，请重新提交</el-button>
+        </div>
+      </div>
 
-        <el-form-item label="姓名" prop="name">
-          <el-input disabled v-model="data.form.name" autocomplete="off" style="width: auto"/>
-        </el-form-item>
-        <el-form-item label="学生证照片">
-          <el-upload
-              class="avatar-uploader"
-              action="http://localhost:9091/files/uploadStuCard"
-              :show-file-list="false"
-              :on-success="handleAvatarSuccess"
-              :disabled="data.ifDisable"
-          >
-            <el-image v-if="data.form.image" :src="data.form.image" class="avatar"/>
-            <el-icon v-else class="avatar-uploader-icon"><Plus /></el-icon>
-          </el-upload>
-        </el-form-item>
+      <!-- 修改后的表单部分 -->
+      <div style="display: flex; justify-content: center;">
+        <el-form
+            ref="formRef"
+            :rules="data.rules"
+            :model="data.form"
+            label-width="100px"
+            style="width: 70%;padding-left: 50px"
+        >
+          <el-form-item label="姓名" prop="name">
+            <el-input disabled v-model="data.form.name" autocomplete="off" style="width: 60%"/>
+          </el-form-item>
 
-      </el-form>
-      <div style="text-align: center">
-        <el-button type="primary" size="large" @click="addIdentification" :disabled="data.ifDisable" >提交</el-button>
+          <el-form-item label="学生证照片">
+            <div style="display: flex; justify-content: center;">
+              <el-upload
+                  class="avatar-uploader"
+                  action="http://localhost:9091/files/uploadStuCard"
+                  :show-file-list="false"
+                  :on-success="handleAvatarSuccess"
+                  :disabled="data.ifDisable"
+              >
+                <el-image v-if="data.form.image" :src="data.form.image" class="avatar"/>
+                <el-icon v-else class="avatar-uploader-icon"><Plus /></el-icon>
+              </el-upload>
+            </div>
+          </el-form-item>
+
+          <el-form-item>
+            <div style="text-align: center; width: 100%;padding-right: 160px">
+              <el-button type="primary" size="large" @click="addIdentification" :disabled="data.ifDisable">
+                提交
+              </el-button>
+            </div>
+          </el-form-item>
+        </el-form>
       </div>
     </el-card>
-
   </div>
 </template>
 
