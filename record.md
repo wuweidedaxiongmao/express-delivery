@@ -339,6 +339,24 @@ status，4个time，
 
 开发完下单和管理员的订单页面，需要开发接单和地址薄功能
 
+#### 5/4
+
+student表添加money字段当作余额
+
+先开发余额和地址的功能
+
+**开发接单**
+
+接单icon需要找
+
+接单后，需要修改courierId,status,acceptTime,
+
+#### 5/5
+
+
+
+签收后，courier的add_money到账
+
 
 
 ## 知识点

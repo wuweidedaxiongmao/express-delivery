@@ -46,6 +46,8 @@ const router = createRouter({
         {path: 'identification',meta: {title: '加入代取员'},component:()=>import('../views/student/Identification.vue')},
         {path: 'order',meta: {title: '下单'},component:()=>import('../views/student/Order.vue')},
         {path: 'orders',meta: {title: '订单信息'},component:()=>import('../views/student/Orders.vue')},
+        {path: 'address',meta: {title: '地址管理'},component:()=>import('../views/student/Address.vue')},
+        {path: 'acceptOrder',meta: {title: '我要接单'},component:()=>import('../views/student/AcceptOrder.vue')},
       ]
     }
   ],

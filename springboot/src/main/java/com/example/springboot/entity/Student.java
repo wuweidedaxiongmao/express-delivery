@@ -12,31 +12,33 @@ public class Student extends Account{
 	private String email;
 	private String role;
 
+	private Integer money; //余额
+	private Integer addMoney; //工资(额外)
+
 	private Integer level; //代取员等级
 	private Double rating; // 平均评分
 	private Integer orderCount;  // 接单数量
+
+	public Integer getMoney() {
+		return money;
+	}
+
+	public void setMoney(Integer money) {
+		this.money = money;
+	}
+
+	public Integer getAddMoney() {
+		return addMoney;
+	}
+
+	public void setAddMoney(Integer addMoney) {
+		this.addMoney = addMoney;
+	}
+
 	// 这三个变量只有在role==COUR才有效
 	private LocalDateTime createdAt;
 	private LocalDateTime updatedAt;
 
-	public Student() {
-	}
-
-	public Student(Integer id, String username, String password, String name, String avatar, String phone, String email, String role, Integer level, Double rating, Integer orderCount, LocalDateTime createdAt, LocalDateTime updatedAt) {
-		this.id = id;
-		this.username = username;
-		this.password = password;
-		this.name = name;
-		this.avatar = avatar;
-		this.phone = phone;
-		this.email = email;
-		this.role = role;
-		this.level = level;
-		this.rating = rating;
-		this.orderCount = orderCount;
-		this.createdAt = createdAt;
-		this.updatedAt = updatedAt;
-	}
 
 	/**
 	 * 获取
@@ -246,7 +248,4 @@ public class Student extends Account{
 		this.updatedAt = updatedAt;
 	}
 
-	public String toString() {
-		return "Student{id = " + id + ", username = " + username + ", password = " + password + ", name = " + name + ", avatar = " + avatar + ", phone = " + phone + ", email = " + email + ", role = " + role + ", level = " + level + ", rating = " + rating + ", orderCount = " + orderCount + ", createdAt = " + createdAt + ", updatedAt = " + updatedAt + "}";
-	}
 }

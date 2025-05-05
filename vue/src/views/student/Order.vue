@@ -18,15 +18,18 @@
             <el-input-number v-model="data.form.studentId" autocomplete="off" style="width: 60%"/>
           </el-form-item>
           <el-form-item label="快递类型ID" prop="typeId">
-            <el-select v-model="data.form.typeId" @change="changeType()">
+            <el-select v-model="data.form.typeId" @change="changeType()" style="width: 60%">
               <el-option :label="item.typeName+' : '+item.price+'元'" v-for="item in data.typeList" :key="item.id" :value="item.id"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="取快递地址" prop="pickupAddress">
             <el-input v-model="data.form.pickupAddress" autocomplete="off" style="width: 60%"/>
           </el-form-item>
-          <el-form-item label="快递送达地址" prop="addressId">
-            <el-input-number v-model="data.form.addressId" autocomplete="off" style="width: 60%"/>
+          <el-form-item label="送达地址ID" prop="addressId">
+<!--            <el-input-number v-model="data.form.addressId" autocomplete="off" style="width: 60%"/>-->
+            <el-select v-model="data.form.addressId" style="width: 60%">
+              <el-option :label="'id'+item.id+': '+item.address" v-for="item in data.myAddress" :key="item.id" :value="item.id"></el-option>
+            </el-select>
           </el-form-item>
           <el-form-item label="快递位置照片">
             <div style="display: flex; justify-content: center;">
@@ -75,24 +78,44 @@ const data =reactive({
   },
   typeList:[],
   price:0,
+  myAddress:[],
 })
 
 request.get('/expressType/selectAll').then(res=>{
   data.typeList=res.data
   console.log(data.typeList)
 })
+request.get('/address/selectAll').then(res=>{
+  data.myAddress=res.data.filter(item=>item.userId===JSON.parse(localStorage.getItem('user')).id)
+  console.log(data.myAddress)
+})
 const changeType=()=>{
   data.price=data.typeList.find(v=>v.id===data.form.typeId).price
 }
 
 const addOrder=()=>{
-  request.post('/orders/add',data.form).then(res=>{
-    if(res.code==='200'){
-      ElMessage.success('发布成功')
-    }else{
-      ElMessage.error(res.msg)
-    }
-  })
+  if(data.user.money>=data.price){
+    data.user.money=data.user.money-data.price
+    request.put('/student/update',data.user).then(res=>{
+      if(res.code==='200'){//金额更新成功
+        //更新缓存
+        localStorage.setItem('user',JSON.stringify(data.user))
+        //发送add order请求
+        request.post('/orders/add',data.form).then(res=>{
+          if(res.code==='200'){
+            ElMessage.success('发布成功')
+          }else{
+            ElMessage.error(res.msg)
+          }
+        })
+      }
+      else{
+        ElMessage.error(res.msg)
+      }
+    })
+  }else{
+    ElMessage.warning('金额不够，请先充值')
+  }
 
 }
 

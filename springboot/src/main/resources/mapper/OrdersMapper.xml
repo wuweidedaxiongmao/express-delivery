@@ -3,21 +3,47 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.springboot.mapper.OrdersMapper">
+<!--    <select id="selectAll" resultType="com.example.springboot.entity.Orders">-->
+<!--        SELECT orders.*, s1.name AS studentName, s2.name AS courierName,-->
+<!--               s1.username AS studentUsername, s2.username AS courierUsername,-->
+<!--               ex.type_name AS typeName, ex.price AS price, address.address AS address-->
+<!--            FROM orders-->
+<!--            LEFT JOIN student s1 ON orders.student_id=s1.id-->
+<!--            LEFT JOIN student s2 ON orders.courier_id=s2.id-->
+<!--            LEFT JOIN express_type ex ON orders.type_id=ex.id-->
+<!--            LEFT JOIN address ON orders.address_id=address.id-->
+<!--            <where>-->
+<!--                <if test="id != null">-->
+<!--                    orders.id like concat('%',#{id},'%')-->
+<!--                </if>-->
+<!--                <if test="studentId!=null">orders.student_id = #{studentId}</if>-->
+<!--            </where>-->
+<!--            order by orders.id asc-->
+<!--    </select>-->
     <select id="selectAll" resultType="com.example.springboot.entity.Orders">
         SELECT orders.*, s1.name AS studentName, s2.name AS courierName,
-               s1.username AS studentUsername, s2.username AS courierUsername,
-               ex.type_name AS typeName, ex.price AS price
-            FROM orders
-            LEFT JOIN student s1 ON orders.student_id=s1.id
-            LEFT JOIN student s2 ON orders.courier_id=s2.id
-            LEFT JOIN express_type ex ON orders.type_id=ex.id
-            <where>
-                <if test="id != null">
-                    orders.id like concat('%',#{id},'%')
-                </if>
-                <if test="studentId!=null">orders.student_id = #{studentId}</if>
-            </where>
-            order by orders.id asc
+        s1.username AS studentUsername, s2.username AS courierUsername,
+        ex.type_name AS typeName, ex.price AS price, address.address AS address
+        FROM orders
+        LEFT JOIN student s1 ON orders.student_id=s1.id
+        LEFT JOIN student s2 ON orders.courier_id=s2.id
+        LEFT JOIN express_type ex ON orders.type_id=ex.id
+        LEFT JOIN address ON orders.address_id=address.id
+        <where>
+            <if test="id != null">
+                orders.id like concat('%',#{id},'%')
+            </if>
+            <if test="studentId != null">
+                AND orders.student_id = #{studentId}
+            </if>
+            <if test="studentName != null and studentName != ''">
+                AND s1.name LIKE concat('%', #{studentName}, '%')
+            </if>
+            <if test="pickupAddress != null and pickupAddress != ''">
+                AND orders.pickup_address LIKE concat('%', #{pickupAddress}, '%')
+            </if>
+        </where>
+        ORDER BY orders.id DESC
     </select>
 
     <!-- 插入新订单 -->

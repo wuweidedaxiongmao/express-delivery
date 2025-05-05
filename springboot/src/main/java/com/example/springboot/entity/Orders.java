@@ -19,6 +19,7 @@ public class Orders {
 	private LocalDateTime deliveryTime; // 订单送达时间
 	private LocalDateTime signTime;    // 订单签收时间
 	private BigDecimal rating;         // 评分（保留三位小数）
+	private String feedback;           // 反馈信息
 
 	//多表查询数据
 	private String studentName;
@@ -27,6 +28,15 @@ public class Orders {
 	private String courierUsername;
 	private String typeName;
 	private Integer price;
+	private String address;//快递送达地址
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
 
 	public String getTypeName() {
 		return typeName;
@@ -197,6 +207,6 @@ public class Orders {
 		this.feedback = feedback;
 	}
 
-	private String feedback;           // 反馈信息
+
 
 }

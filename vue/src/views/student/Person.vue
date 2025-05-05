@@ -25,6 +25,14 @@
         <el-form-item label="邮箱" prop="email">
           <el-input v-model="data.form.email" autocomplete="off" placeholder="请输入邮箱"/>
         </el-form-item>
+        <el-form-item label="余额">
+          <div> {{data.form.money}} 元</div>
+          <div style="margin-left: 50px"><el-button type="success" @click="money">充值</el-button></div>
+        </el-form-item>
+        <el-form-item label="工资" v-if="data.form.role==='COUR'">
+          <div> {{data.form.addMoney}} 个</div>
+          <div style="margin-left: 50px"><el-button type="success">提现</el-button></div>
+        </el-form-item>
       </el-form>
       <div style="text-align: center">
         <el-button type="primary" size="large" @click="updateUser">更新个人信息</el-button>
@@ -32,6 +40,15 @@
     </el-card>
 
   </div>
+  <el-dialog v-model="data.formVisible" title="充值金额" width="500" destroy-on-close>
+    <el-form label-width="80px">
+      <el-form-item label="充值金额">
+        <el-input-number v-model="data.temp" placeholder="请输入先要充值的金额"></el-input-number>
+        <el-button type="primary" @click="confirmMoney()" style="margin-left: 20px">确认充值</el-button>
+      </el-form-item>
+    </el-form>
+
+  </el-dialog>
 </template>
 
 <script setup>
@@ -41,6 +58,7 @@ import {ElMessage} from "element-plus";
 
 const formRef=ref()
 const data =reactive({
+  formVisible:false,
   user:JSON.parse(localStorage.getItem('user')),
   form:{},
   rules:{
@@ -50,6 +68,10 @@ const data =reactive({
     name:[
       {required:true, message:"请输入姓名", trigger: "blur"}
     ],
+  },
+  temp:0,
+  formMoney:{
+    money:0,
   }
 })
 
@@ -81,6 +103,30 @@ const updateUser=()=>{
 const handleAvatarSuccess=(res)=>{
  //console.log(res)
   data.form.avatar=res.data
+}
+const money=()=>{
+  data.formVisible=true
+}
+const confirmMoney=()=>{
+  data.formMoney.money=data.temp+data.form.money
+  data.formMoney.id=data.form.id
+
+  // const temp=data.form.money
+  // data.form.money=temp+data.first
+  //updateById ,formMoney列表中必须要有id属性。之前没有更新成功就是因为没有id
+  request.put('/student/update',data.formMoney).then(res=>{
+    if(res.code==='200'){
+      ElMessage.success('更新成功')
+      //更新缓存
+      data.form.money=data.formMoney.money
+      localStorage.setItem('user',JSON.stringify(data.form))
+      data.formVisible=false
+    }else{
+      data.formVisible=false
+      ElMessage.error(res.msg)
+    }
+  })
+
 }
 </script>
 
