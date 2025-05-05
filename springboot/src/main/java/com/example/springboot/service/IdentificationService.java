@@ -43,7 +43,7 @@ public class IdentificationService {
 		//管理员修改时间
 		identification.setUpdatedAt(LocalDateTime.now());
 		//即使修改也是审核中
-		identification.setStatus(ReviewStatus.PENDING);
+//		identification.setStatus(ReviewStatus.PENDING);
 		identificationMapper.updateById(identification);
 	}
 	public Identification selectById(Integer id) {

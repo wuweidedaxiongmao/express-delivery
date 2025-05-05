@@ -48,7 +48,8 @@
           </el-table-column>
           <el-table-column label="操作">
             <template #default="scope">
-              <el-button link type="primary" size="large"  @click="rate(scope.row)" v-if="scope.row.rating===null">评分</el-button>
+              <el-button link type="primary" size="large"  @click="rate(scope.row)" v-if="scope.row.rating===null||scope.row.rating===0">评分</el-button>
+              <el-tag link type="success" size="large" v-if="scope.row.rating!==0&&scope.row.rating!==null">已完成评分</el-tag>
             </template>
           </el-table-column>
 
@@ -68,14 +69,22 @@
       </el-card>
     </div>
     <el-dialog v-model="data.formVisible" title="评分" width="500" destroy-on-close>
-      <el-form label-width="80px">
-        <el-form-item label="评分">
-          <el-input-number v-model="data.form.rating" placeholder=""></el-input-number>
+      <el-form label-width="80px" ref="formRef" :rules="data.rules" :model="data.form" >
+        <el-form-item label="评分" prop="rating">
+<!--          <el-input-number v-model="data.form.rating" placeholder=""></el-input-number>-->
+          <el-rate v-model="data.form.rating" size="large" allow-half></el-rate>
         </el-form-item>
-        <el-form-item label="评分">
+        <el-form-item label="反馈信息" prop="feedback">
           <el-input v-model="data.form.feedback" placeholder="反馈信息"></el-input>
         </el-form-item>
       </el-form>
+      <template #footer>
+        <div class="dialog-footer">
+          <el-button @click="data.formVisible = false">取消</el-button>
+          <el-button type="primary" @click="submit()">提交
+          </el-button>
+        </div>
+      </template>
     </el-dialog>
   </div>
 </template>
@@ -96,7 +105,13 @@ const data=reactive({
   orders:{},
   formVisible:false,
   form:{},
+  rules:{
+    rating:[
+      {required:true,message:"请输入评分",trigger:"blur"}
+    ],
+  }
 })
+const formRef=ref()
 
 const load=()=>{
   request.get('/orders/selectPage',{  //?pageNum=1&pageSize=10
@@ -121,7 +136,40 @@ const reset=()=>{
 }
 const rate=(row)=>{
   data.formVisible=true
+  data.form=row
 }
-
+const submit = () => {
+  formRef.value.validate((valid) => {
+    if (valid && data.form.rating !== 0) {
+      request.put('/orders/update', data.form).then(res => {
+        if (res.code === '200') {
+          // 同时应该修改courier的rating字段(student表)
+          const url = '/student/selectById/' + data.form.courierId;
+          request.get(url).then(res => {
+            if (res.code === '200') {
+              const courier = res.data;
+              courier.ratingCount = courier.ratingCount + 1;
+              courier.rating = (courier.rating + data.form.rating) / courier.ratingCount;
+              courier.rating = Math.round(courier.rating * 1000) / 1000;
+              request.put('/student/update', courier).then(res => {
+                if (res.code === '200') {
+                  ElMessage.success("成功评分");
+                  load();
+                  data.formVisible = false;
+                } else {
+                  ElMessage.error(res.msg);
+                }
+              });
+            } else {
+              ElMessage.error(res.msg);
+            }
+          });
+        } else {
+          ElMessage.error(res.msg);
+        }
+      });
+    }
+  });
+};
 
 </script>

@@ -365,6 +365,14 @@ student表添加money字段当作余额
 
 
 
+identification通过代取员认证时候，初始化courier的一些数据
+
+签收后，add_money，order_count
+
+评分后，rating_count,rating
+
+
+
 ## 知识点
 
 ### 设置元素水平居中
@@ -400,6 +408,12 @@ index.js中的path中的name不能重复
 ## 小问题
 
 实体类的get方法名要与数据库中字段名对应，否则会识别不到
+
+**error**
+
+![image-20250505212912483](record.assets/image-20250505212912483.png)
+
+没加逗号，后端报错，grok没有deepseek好用
 
 
 

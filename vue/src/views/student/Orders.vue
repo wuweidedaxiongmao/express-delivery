@@ -137,6 +137,7 @@ const confirmOrder=(row)=>{
         if(res.code==='200'){
           const courier=res.data
           courier.addMoney=courier.addMoney+row.price
+          courier.orderCount=courier.orderCount+1
           request.put('/student/update',courier).then(res=>{
             if(res.code==='200'){
               ElMessage.success("成功签收")

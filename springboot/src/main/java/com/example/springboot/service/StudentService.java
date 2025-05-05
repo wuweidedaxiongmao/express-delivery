@@ -30,9 +30,8 @@ public class StudentService {
 		LocalDateTime now =LocalDateTime.now();
 		student.setCreatedAt(now);
 		student.setUpdatedAt(now);
-		//设置余额和工资
+		//设置余额
 		student.setMoney(0);
-		student.setAddMoney(0);
 		studentMapper.insert(student);
 	}
 

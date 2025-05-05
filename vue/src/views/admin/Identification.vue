@@ -40,7 +40,7 @@
 
           <el-table-column label="操作">
             <template #default="scope">
-              <el-button link type="primary" size="small" :icon="Edit" @click="handleUpdate(scope.row)">
+              <el-button link type="primary" size="small" :icon="Edit" @click="handleUpdate(scope.row)" v-if="scope.row.status!=='Approved'">
                 审核
               </el-button>
               <el-button link type="primary" size="small" :icon="Delete" @click="del(scope.row.id)">删除</el-button>
@@ -143,6 +143,12 @@ const handleAdd=()=>{
   data.form={}
 }
 
+const handleUpdate=(row)=>{
+  // data.form=row  会出现浅拷贝
+  data.form=JSON.parse(JSON.stringify(row)) //深拷贝
+  data.formVisible=true
+}
+
 const update=()=>{
   if(data.form.status==='Approved'){
     //id===data.form.student_id
@@ -150,10 +156,15 @@ const update=()=>{
     request.get(url).then(res=>{
       data.student=res.data
       data.student.role='COUR'
+      data.student.addMoney=0
       data.student.level=1
+      data.student.rating=0
+      data.student.ratingCount=0
+      data.student.orderCount=0
       request.put('/student/update',data.student)
     })
   }
+  console.log(data.form)
   request.put('/identification/update',data.form).then(res=>{
     if(res.code=='200'){
       data.formVisible=false
@@ -163,12 +174,6 @@ const update=()=>{
       ElMessage.error(res.msg)
     }
   })
-}
-
-const handleUpdate=(row)=>{
-  // data.form=row  会出现浅拷贝
-  data.form=JSON.parse(JSON.stringify(row)) //深拷贝
-  data.formVisible=true
 }
 
 const del=(id)=>{

@@ -17,9 +17,18 @@
         INSERT INTO `identification` (`student_id`,`name`,`image`,`status`,`admin_id`,`created_at`,`updated_at`)
         VALUES (#{studentId},#{name},#{image},#{status},#{adminId},#{createdAt},#{updatedAt})
     </insert>
-    
+
     <update id="updateById" parameterType="com.example.springboot.entity.Identification">
-        update `identification` set student_id=#{studentId},name=#{name},image=#{image},status=#{status},admin_id=#{adminId},created_at=#{createdAt},updated_at=#{updatedAt}
-        where id=#{id}
+        UPDATE `identification`
+        <set>
+            <if test="studentId != null">student_id = #{studentId},</if>
+            <if test="name != null">name = #{name},</if>
+            <if test="image != null">image = #{image},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="adminId != null">admin_id = #{adminId},</if>
+            <if test="createdAt != null">created_at = #{createdAt},</if>
+            <if test="updatedAt != null">updated_at = #{updatedAt},</if>
+        </set>
+        WHERE id = #{id}
     </update>
 </mapper>

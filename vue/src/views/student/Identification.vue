@@ -124,6 +124,7 @@ const addIdentification=()=>{
   }else{
     //用户上传过但是被拒绝了
     //其实无所谓，只要用户没有上传过就行，不用管状态都是update
+    data.form.status='Pending'
     request.put('/identification/update',data.form).then(res=>{
       if(res.code==='200'){
         ElMessage.success("提交成功")

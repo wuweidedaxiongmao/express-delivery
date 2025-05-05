@@ -17,6 +17,7 @@ public class Student extends Account{
 
 	private Integer level; //代取员等级
 	private Double rating; // 平均评分
+	private Integer ratingCount;
 	private Integer orderCount;  // 接单数量
 
 	public Integer getMoney() {
@@ -248,4 +249,11 @@ public class Student extends Account{
 		this.updatedAt = updatedAt;
 	}
 
+	public Integer getRatingCount() {
+		return ratingCount;
+	}
+
+	public void setRatingCount(Integer ratingCount) {
+		this.ratingCount = ratingCount;
+	}
 }
