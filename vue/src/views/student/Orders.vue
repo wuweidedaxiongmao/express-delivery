@@ -47,7 +47,7 @@
           <el-table-column prop="status" label="快递状态" show-overflow-tooltip="true"/>
           <el-table-column label="操作">
             <template #default="scope">
-              <el-button link type="primary" size="small" :icon="Delete" @click="del(scope.row.id)" v-if="scope.row.status==='待接单'">删除</el-button>
+              <el-button link type="primary" size="large"  @click="confirmOrder(scope.row)" v-if="scope.row.status==='已送达'">签收</el-button>
             </template>
           </el-table-column>
 
@@ -82,7 +82,7 @@ const data=reactive({
   pageSize:10,
   total:0,
   ids:[],
-  orders:{}
+  orders:{},
 })
 
 const load=()=>{
@@ -94,9 +94,10 @@ const load=()=>{
       studentId:JSON.parse(localStorage.getItem('user')).id
     }
   }).then(res=>{
+    res.data.list=res.data.list.filter(item=>item.status!=='已签收')
     data.tableData=res.data.list
     data.total=res.data.total
-    console.log(res.data)
+    console.log(res.data.list)
   })
 }
 load()
@@ -123,34 +124,35 @@ const del=(id)=>{
   }).catch()
 
 }
-
-const handleSelectChange=(rows=>{
-  console.log(rows)
-  data.ids = rows.map(row=>row.id)
-  console.log(data.ids)
-})
-
-const batchDelete=()=>{
-  if(data.ids.length===0){
-    ElMessage.warning("请选择要删除的数据")
-    return
-  }
-  // request.delete('/admin/deleteBatch',{
-  //   params:{
-  //     ids:data.ids
-  //   }
-  // })
-  ElMessageBox.confirm("批量删除删除数据后无法恢复，确认删除吗",{type:"warning"}).then(()=>{
-    request.delete('/orders/deleteBatch',{data:data.ids}).then(res=>{
-      if(res.code=='200'){
-        ElMessage.success("操作成功")
-        load() //新增后重新加载数据
-      } else{
-        ElMessage.error(res.msg)
-      }
-    })
-  }).catch()
-
+const confirmOrder=(row)=>{
+  //签收时间
+  const now = new Date().toISOString()
+  row.status='已签收'
+  row.signTime=now
+  request.put('/orders/update', row).then(res => {
+    if (res.code === '200') {
+      //获取快递员对象
+      const url='/student/selectById/'+row.courierId
+      request.get(url).then(res=>{
+        if(res.code==='200'){
+          const courier=res.data
+          courier.addMoney=courier.addMoney+row.price
+          request.put('/student/update',courier).then(res=>{
+            if(res.code==='200'){
+              ElMessage.success("成功签收")
+              load()
+            }else{
+              ElMessage.error(res.msg)
+            }
+          })
+        }else{
+          ElMessage.error(res.msg)
+        }
+      })
+    } else {
+      ElMessage.error(res.msg)
+    }
+  })
 }
 
 </script>

@@ -353,7 +353,13 @@ student表添加money字段当作余额
 
 #### 5/5
 
+订单查询修改为我的订单，能够查看到全部的订单信息
 
+(根据status查询)
+
+派送中订单修改：status，deliveryTime
+
+代收订单只保留代收的功能 (签收已送达的订单)
 
 签收后，courier的add_money到账
 

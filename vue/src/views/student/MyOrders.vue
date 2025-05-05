@@ -2,19 +2,16 @@
   <div>
     <div>
       <el-card class="card">
-        <el-input style="margin-right: 5px; width: 240px" v-model="data.studentName" placeholder="请输入学生姓名查询" prefix-icon="Search"></el-input>
+        <el-input style="margin-right: 5px; width: 200px" v-model="data.courierName" placeholder="请输入代取员姓名查询" prefix-icon="Search"></el-input>
         <el-button type="primary" plain @click="load()">查询</el-button>
-        <el-input style="margin-right: 5px; width: 240px; margin-left: 10px" v-model="data.pickupAddress" placeholder="请输入代取快递地址查询" prefix-icon="Search"></el-input>
+        <el-input style="margin-right: 5px; width: 200px; margin-left: 13px" v-model="data.pickupAddress" placeholder="请输入代取快递地址查询" prefix-icon="Search"></el-input>
+        <el-button type="primary" plain @click="load()">查询</el-button>
+        <el-select v-model="data.status" style="margin-right: 5px; width: 150px;margin-left: 13px">
+          <el-option :label="item" v-for="item in data.statusList" :value="item"></el-option>
+        </el-select>
         <el-button type="primary" plain @click="load()">查询</el-button>
         <el-button style="margin-left: 20px" type="primary" plain @click="reset()">重置</el-button>
       </el-card>
-
-<!--      <el-card class="card">-->
-<!--&lt;!&ndash;        <el-button type="primary" plain @click="handleAdd()">新增</el-button>&ndash;&gt;-->
-<!--        <el-button type="primary" plain @click="batchDelete">批量删除</el-button>-->
-<!--        &lt;!&ndash;        <el-button type="primary" plain>upload</el-button>&ndash;&gt;-->
-<!--        &lt;!&ndash;        <el-button type="primary" plain>download</el-button>&ndash;&gt;-->
-<!--      </el-card>-->
 
       <el-card>
         <el-table :data="data.tableData"  stripe="true" @selection-change="handleSelectChange">
@@ -58,11 +55,10 @@
               <el-image v-if="scope.row.image" :src="scope.row.image" style="width: 80px" :preview-src-list="[scope.row.image]" preview-teleported/>
             </template>
           </el-table-column>
-<!--          <el-table-column prop="status" label="快递状态" show-overflow-tooltip="true"/>-->
+          <el-table-column prop="status" label="快递状态" show-overflow-tooltip="true"/>
           <el-table-column label="操作">
             <template #default="scope">
-<!--              <el-button link type="primary" size="small" :icon="Delete" @click="del(scope.row.id)">删除</el-button>-->
-              <el-button link type="primary" size="large" @click="accept(scope.row)">接单</el-button>
+              <el-button link type="primary" size="small" :icon="Delete" @click="del(scope.row.id)" v-if="scope.row.status==='待接单'">删除</el-button>
             </template>
           </el-table-column>
 
@@ -91,15 +87,16 @@ import request from "@/utils/request";
 import {ElMessage, ElMessageBox} from "element-plus";
 
 const data=reactive({
-  user:JSON.parse(localStorage.getItem('user')),
-  studentName:null,
+  courierName:null,
   pickupAddress:null,
+  status:null,
   tableData:[],
   pageNumber:1,
   pageSize:10,
   total:0,
   ids:[],
-  row:null,
+  orders:{},
+  statusList:['待接单','派送中','已送达','已签收'],
 })
 
 const load=()=>{
@@ -107,21 +104,23 @@ const load=()=>{
     params:{
       pageNum:data.pageNumber,
       pageSize:data.pageSize,
-      studentName:data.studentName,
-      pickupAddress:data.pickupAddress
+      courierName:data.courierName,
+      pickupAddress:data.pickupAddress,
+      studentId:JSON.parse(localStorage.getItem('user')).id,
+      status:data.status
     }
   }).then(res=>{
-    res.data.list=res.data.list.filter(item=>item.courierId===null)
     data.tableData=res.data.list
     data.total=res.data.total
-    console.log(res.data.list)
+    console.log(res.data)
   })
 }
 load()
 
 const reset=()=>{
-  data.studentName=null
+  data.courierName=null
   data.pickupAddress=null
+  data.status=null
   load()
 }
 
@@ -171,39 +170,5 @@ const batchDelete=()=>{
   }).catch()
 
 }
-const accept=(row)=>{
-  // console.log(row)
-  data.row=row
-  const now=new Date().toISOString()
-  data.row.courierId=data.user.id
-  data.row.status='派送中'
-  data.row.accessTime=now
-  request.put('/orders/update',data.row).then(res=>{
-    if(res.code==='200'){
-      ElMessage.success("成功接单")
-      load()
-    }
-    else{
-      ElMessage.error(res.msg)
-    }
-  })
-}
-//可以修改传入的row参数 优化后:
-// const accept = (row) => {
-//   const now = new Date().toISOString()
-//
-//   request.put('/orders/update', {
-//     ...row,  // 展开原有属性
-//     courierId: data.user.id,
-//     status: '派送中',
-//     accessTime: now
-//   }).then(res => {
-//     if (res.code === '200') {
-//       ElMessage.success("成功接单")
-//       load()
-//     } else {
-//       ElMessage.error(res.msg)
-//     }
-//   })
-// }
+
 </script>

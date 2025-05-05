@@ -21,10 +21,10 @@
     <div class="action-bar">
       <el-row :gutter="20" justify="center">
         <el-col :span="6" class="action-item">
-          <el-button circle type="info" size="large" @click="router.push('/front/order-query')">
+          <el-button circle type="info" size="large" @click="router.push('/student/myOrders')">
             <el-icon><Search /></el-icon>
           </el-button>
-          <p>订单查询</p>
+          <p>我的订单</p>
         </el-col>
         <el-col :span="6" class="action-item">
           <el-button circle size="large" type="success" @click="router.push('/student/order')" >

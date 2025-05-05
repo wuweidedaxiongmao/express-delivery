@@ -17,13 +17,15 @@
             style="background-color: #81aee2;font-weight: bold; height: 80px;margin-left: 10px"
         >
           <el-menu-item index="/student/home">首页</el-menu-item>
-          <el-menu-item index="/student/orders">代收订单</el-menu-item>
-          <el-menu-item v-if="ifCourier" index="/student/delivery">派送中订单</el-menu-item>
+          <el-menu-item index="/student/orders">待收订单</el-menu-item>
+          <el-menu-item index="/student/finishOrders">已完成订单</el-menu-item>
+          <el-menu-item v-if="ifCourier" index="/student/deliveryOrders">派送中订单</el-menu-item>
           <el-menu-item v-if="ifCourier" index="/student/acceptOrder">我要接单</el-menu-item>
           <el-menu-item index="/student/rank">拼行榜</el-menu-item>
           <el-menu-item index="/student/news">校园资讯</el-menu-item>
-          <el-menu-item index="/student/logistics">后勤快讯</el-menu-item>
-          <el-menu-item index="/student/person">个人中心</el-menu-item>
+          <el-menu-item index="/student/logistics">反馈中心</el-menu-item>
+<!--          <el-menu-item index="/student/person">个人中心</el-menu-item>-->
+
         </el-menu>
       </div>
 

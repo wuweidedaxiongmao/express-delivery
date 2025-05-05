@@ -1,20 +1,6 @@
 <template>
   <div>
     <div>
-      <el-card class="card">
-        <el-input style="margin-right: 5px; width: 240px" v-model="data.studentName" placeholder="请输入学生姓名查询" prefix-icon="Search"></el-input>
-        <el-button type="primary" plain @click="load()">查询</el-button>
-        <el-input style="margin-right: 5px; width: 240px; margin-left: 10px" v-model="data.pickupAddress" placeholder="请输入代取快递地址查询" prefix-icon="Search"></el-input>
-        <el-button type="primary" plain @click="load()">查询</el-button>
-        <el-button style="margin-left: 20px" type="primary" plain @click="reset()">重置</el-button>
-      </el-card>
-
-<!--      <el-card class="card">-->
-<!--&lt;!&ndash;        <el-button type="primary" plain @click="handleAdd()">新增</el-button>&ndash;&gt;-->
-<!--        <el-button type="primary" plain @click="batchDelete">批量删除</el-button>-->
-<!--        &lt;!&ndash;        <el-button type="primary" plain>upload</el-button>&ndash;&gt;-->
-<!--        &lt;!&ndash;        <el-button type="primary" plain>download</el-button>&ndash;&gt;-->
-<!--      </el-card>-->
 
       <el-card>
         <el-table :data="data.tableData"  stripe="true" @selection-change="handleSelectChange">
@@ -58,11 +44,11 @@
               <el-image v-if="scope.row.image" :src="scope.row.image" style="width: 80px" :preview-src-list="[scope.row.image]" preview-teleported/>
             </template>
           </el-table-column>
-<!--          <el-table-column prop="status" label="快递状态" show-overflow-tooltip="true"/>-->
+          <el-table-column prop="status" label="快递状态" show-overflow-tooltip="true">
+          </el-table-column>
           <el-table-column label="操作">
             <template #default="scope">
-<!--              <el-button link type="primary" size="small" :icon="Delete" @click="del(scope.row.id)">删除</el-button>-->
-              <el-button link type="primary" size="large" @click="accept(scope.row)">接单</el-button>
+              <el-button link type="primary" size="large"  @click="rate(scope.row)" v-if="scope.row.rating===null">评分</el-button>
             </template>
           </el-table-column>
 
@@ -81,6 +67,16 @@
         </div>
       </el-card>
     </div>
+    <el-dialog v-model="data.formVisible" title="评分" width="500" destroy-on-close>
+      <el-form label-width="80px">
+        <el-form-item label="评分">
+          <el-input-number v-model="data.form.rating" placeholder=""></el-input-number>
+        </el-form-item>
+        <el-form-item label="评分">
+          <el-input v-model="data.form.feedback" placeholder="反馈信息"></el-input>
+        </el-form-item>
+      </el-form>
+    </el-dialog>
   </div>
 </template>
 
@@ -91,15 +87,15 @@ import request from "@/utils/request";
 import {ElMessage, ElMessageBox} from "element-plus";
 
 const data=reactive({
-  user:JSON.parse(localStorage.getItem('user')),
-  studentName:null,
-  pickupAddress:null,
+  id:null,
   tableData:[],
   pageNumber:1,
   pageSize:10,
   total:0,
   ids:[],
-  row:null,
+  orders:{},
+  formVisible:false,
+  form:{},
 })
 
 const load=()=>{
@@ -107,11 +103,11 @@ const load=()=>{
     params:{
       pageNum:data.pageNumber,
       pageSize:data.pageSize,
-      studentName:data.studentName,
-      pickupAddress:data.pickupAddress
+      id:data.id,
+      studentId:JSON.parse(localStorage.getItem('user')).id
     }
   }).then(res=>{
-    res.data.list=res.data.list.filter(item=>item.courierId===null)
+    res.data.list=res.data.list.filter(item=>item.status==='已签收')
     data.tableData=res.data.list
     data.total=res.data.total
     console.log(res.data.list)
@@ -120,90 +116,12 @@ const load=()=>{
 load()
 
 const reset=()=>{
-  data.studentName=null
-  data.pickupAddress=null
+  data.id=null
   load()
 }
-
-const del=(id)=>{
-  ElMessageBox.confirm("删除数据后无法恢复，确认删除吗","确认删除",{type:"warning"}).then(()=>{
-    request.delete('/orders/deleteById',{
-      params:{
-        id:id
-      }
-    }).then(res=>{
-      if(res.code=='200'){
-        ElMessage.success("操作成功")
-        load() //删除后重新加载数据
-      } else{
-        ElMessage.error(res.msg)
-      }
-    })
-  }).catch()
-
+const rate=(row)=>{
+  data.formVisible=true
 }
 
-const handleSelectChange=(rows=>{
-  console.log(rows)
-  data.ids = rows.map(row=>row.id)
-  console.log(data.ids)
-})
 
-const batchDelete=()=>{
-  if(data.ids.length===0){
-    ElMessage.warning("请选择要删除的数据")
-    return
-  }
-  // request.delete('/admin/deleteBatch',{
-  //   params:{
-  //     ids:data.ids
-  //   }
-  // })
-  ElMessageBox.confirm("批量删除删除数据后无法恢复，确认删除吗",{type:"warning"}).then(()=>{
-    request.delete('/orders/deleteBatch',{data:data.ids}).then(res=>{
-      if(res.code=='200'){
-        ElMessage.success("操作成功")
-        load() //新增后重新加载数据
-      } else{
-        ElMessage.error(res.msg)
-      }
-    })
-  }).catch()
-
-}
-const accept=(row)=>{
-  // console.log(row)
-  data.row=row
-  const now=new Date().toISOString()
-  data.row.courierId=data.user.id
-  data.row.status='派送中'
-  data.row.accessTime=now
-  request.put('/orders/update',data.row).then(res=>{
-    if(res.code==='200'){
-      ElMessage.success("成功接单")
-      load()
-    }
-    else{
-      ElMessage.error(res.msg)
-    }
-  })
-}
-//可以修改传入的row参数 优化后:
-// const accept = (row) => {
-//   const now = new Date().toISOString()
-//
-//   request.put('/orders/update', {
-//     ...row,  // 展开原有属性
-//     courierId: data.user.id,
-//     status: '派送中',
-//     accessTime: now
-//   }).then(res => {
-//     if (res.code === '200') {
-//       ElMessage.success("成功接单")
-//       load()
-//     } else {
-//       ElMessage.error(res.msg)
-//     }
-//   })
-// }
 </script>

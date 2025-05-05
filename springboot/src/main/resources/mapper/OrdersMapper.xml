@@ -36,11 +36,20 @@
             <if test="studentId != null">
                 AND orders.student_id = #{studentId}
             </if>
+            <if test="courierId != null and courierId != ''">
+                AND orders.courier_id = #{courierId}
+            </if>
             <if test="studentName != null and studentName != ''">
                 AND s1.name LIKE concat('%', #{studentName}, '%')
             </if>
+            <if test="courierName != null and courierName != ''">
+                AND s2.name LIKE concat('%', #{courierName}, '%')
+            </if>
             <if test="pickupAddress != null and pickupAddress != ''">
                 AND orders.pickup_address LIKE concat('%', #{pickupAddress}, '%')
+            </if>
+            <if test="status != null">
+                AND orders.status = #{status}
             </if>
         </where>
         ORDER BY orders.id DESC

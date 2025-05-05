@@ -45,9 +45,12 @@ const router = createRouter({
         {path: 'person',name:'person',meta: {title: '个人信息'},component:()=>import('../views/student/Person.vue')},
         {path: 'identification',meta: {title: '加入代取员'},component:()=>import('../views/student/Identification.vue')},
         {path: 'order',meta: {title: '下单'},component:()=>import('../views/student/Order.vue')},
-        {path: 'orders',meta: {title: '订单信息'},component:()=>import('../views/student/Orders.vue')},
+        {path: 'orders',meta: {title: '待收订单'},component:()=>import('../views/student/Orders.vue')},
         {path: 'address',meta: {title: '地址管理'},component:()=>import('../views/student/Address.vue')},
         {path: 'acceptOrder',meta: {title: '我要接单'},component:()=>import('../views/student/AcceptOrder.vue')},
+        {path: 'myOrders',meta: {title: '我的订单'},component:()=>import('../views/student/MyOrders.vue')},
+        {path: 'deliveryOrders',meta: {title: '派送中订单'},component:()=>import('../views/student/DeliveryOrders.vue')},
+        {path: 'finishOrders',meta: {title: '已完成订单'},component:()=>import('../views/student/FinishOrders.vue')},
       ]
     }
   ],
