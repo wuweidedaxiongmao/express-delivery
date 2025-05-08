@@ -56,7 +56,13 @@ const router = createRouter({
         {path: 'information/detail/:id',component:()=>import('../views/student/Detail.vue')},
 
       ]
-    }
+    },
+    {
+      path: '/:pathMatch(.*)*', // 匹配所有未定义的路由
+      name: 'NotFound',
+      meta: { title: '页面不存在' },
+      component:()=>import('../views/NotFound.vue'),
+    },
   ],
 })
 
