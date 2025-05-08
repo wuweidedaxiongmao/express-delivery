@@ -57,7 +57,7 @@
       </el-card>
     </div>
 
-    <el-dialog v-model="data.formVisible" title="学生信息" width="500" destroy-on-close>
+    <el-dialog v-model="data.formVisible" title="管理员信息" width="500" destroy-on-close>
       <el-form ref="formRef" :rules="data.rules" :model="data.form" label-width="80px">
         <el-form-item label="账号" prop="username">
           <el-input v-model="data.form.username" autocomplete="off" placeholder="请输入账号"/>
@@ -127,7 +127,7 @@ const data=reactive({
 const formRef=ref()
 
 const load=()=>{
-  request.get('/student/selectPage',{  //?pageNum=1&pageSize=10
+  request.get('/admin/selectPage',{  //?pageNum=1&pageSize=10
     params:{
       pageNum:data.pageNumber,
       pageSize:data.pageSize,
@@ -164,8 +164,8 @@ const save=()=>{  // 2个操作 add & edit
 }
 
 const add=()=>{
-  data.form.role='STU'
-  request.post('/student/add',data.form).then(res=>{
+  data.form.role='ADMIN'
+  request.post('/admin/add',data.form).then(res=>{
     if(res.code=='200'){
       data.formVisible=false
       ElMessage.success("操作成功")
@@ -176,7 +176,7 @@ const add=()=>{
   })
 }
 const update=()=>{
-  request.put('/student/update',data.form).then(res=>{
+  request.put('/admin/update',data.form).then(res=>{
     if(res.code=='200'){
       data.formVisible=false
       ElMessage.success("操作成功")
@@ -195,7 +195,7 @@ const handleUpdate=(row)=>{
 
 const del=(id)=>{
   ElMessageBox.confirm("删除数据后无法恢复，确认删除吗","确认删除",{type:"warning"}).then(()=>{
-    request.delete('/student/deleteById',{
+    request.delete('/admin/deleteById',{
       params:{
         id:id
       }
@@ -228,7 +228,7 @@ const batchDelete=()=>{
   //   }
   // })
   ElMessageBox.confirm("批量删除删除数据后无法恢复，确认删除吗",{type:"warning"}).then(()=>{
-    request.delete('/student/deleteBatch',{data:data.ids}).then(res=>{
+    request.delete('/admin/deleteBatch',{data:data.ids}).then(res=>{
       if(res.code=='200'){
         ElMessage.success("操作成功")
         load() //新增后重新加载数据

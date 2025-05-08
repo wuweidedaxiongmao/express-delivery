@@ -26,13 +26,14 @@ const router = createRouter({
       component:()=>import('../views/admin/Admin.vue'),
       children:[
           {path:'expressType',name:'expressType',meta:{title:'快递类型'},component:()=>import('../views/admin/ExpressType.vue')},
-          {path:'student',meta:{title:'学生信息'},component:()=>import('../views/admin/Student.vue')},
+          {path:'students',meta:{title:'学生信息'},component:()=>import('../views/admin/Students.vue')},
         {path:'courierCommission',name:'courierCommission',meta:{title:'代取员等级信息'},component:()=>import('../views/admin/CourierCommission.vue')},
         {path:'person',meta: {title: '管理员信息'},component:()=>import('../views/admin/Person.vue')},
         {path: 'identification',meta: {title: '代取员认证申请'},component:()=>import('../views/admin/Identification.vue')},
-        {path: 'orders',meta: {title: '代取订单信息'},component:()=>import('../views/admin/Orders.vue')}
-
-
+        {path: 'orders',meta: {title: '代取订单信息'},component:()=>import('../views/admin/Orders.vue')},
+        {path: 'couriers',meta: {title: '代取员信息'},component:()=>import('../views/admin/Couriers.vue')},
+        {path: 'admins',meta: {title: '管理员信息'},component:()=>import('../views/admin/Admins.vue')},
+        {path: 'information',meta: {title: '校园资讯'},component:()=>import('../views/admin/Information.vue')}
       ]
     },
     {
@@ -51,6 +52,9 @@ const router = createRouter({
         {path: 'myOrders',meta: {title: '我的订单'},component:()=>import('../views/student/MyOrders.vue')},
         {path: 'deliveryOrders',meta: {title: '派送中订单'},component:()=>import('../views/student/DeliveryOrders.vue')},
         {path: 'finishOrders',meta: {title: '已完成订单'},component:()=>import('../views/student/FinishOrders.vue')},
+        {path: 'information',meta: {title: '校园资讯'},component:()=>import('../views/student/Information.vue')},
+        {path: 'information/detail/:id',component:()=>import('../views/student/Detail.vue')},
+
       ]
     }
   ],

@@ -371,6 +371,10 @@ identification通过代取员认证时候，初始化courier的一些数据
 
 评分后，rating_count,rating
 
+### Informatioin
+
+#### 5/8
+
 
 
 ## 知识点
@@ -420,3 +424,5 @@ index.js中的path中的name不能重复
 ## 创新点
 
 1. 加入ai
+
+2. 为ai注入个性化prompt

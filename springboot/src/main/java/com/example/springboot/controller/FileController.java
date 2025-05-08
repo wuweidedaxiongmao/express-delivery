@@ -119,7 +119,7 @@ public class FileController {
 		}
 
 		//返回一个网络路径
-		String url = "http://localhost:9090/files/download/"+fileName;
+		String url = "http://localhost:9091/files/download/"+fileName;
 		//wangEditor上传图片成功后，返回的参数
 		HashMap<String, Object> resMap = new HashMap<>();
 		List<Map<String,Object>> list=new ArrayList<>();

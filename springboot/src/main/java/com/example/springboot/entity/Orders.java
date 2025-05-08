@@ -3,6 +3,7 @@ package com.example.springboot.entity;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Orders {
 	private Integer id;                 // 订单ID
@@ -29,6 +30,32 @@ public class Orders {
 	private String typeName;
 	private Integer price;
 	private String address;//快递送达地址
+
+	private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+	public String getCreateTimeStr(){
+		if(createTime!=null){
+			return createTime.format(formatter);
+		}
+		return null;
+	}
+	public String getAccessTimeStr(){
+		if(accessTime!=null){
+			return accessTime.format(formatter);
+		}
+		return null;
+	}
+	public String getDeliveryTimeStr(){
+		if(deliveryTime!=null){
+			return deliveryTime.format(formatter);
+		}
+		return null;
+	}
+	public String getSignTimeStr(){
+		if(signTime!=null){
+			return signTime.format(formatter);
+		}
+		return null;
+	}
 
 	public String getAddress() {
 		return address;

@@ -36,10 +36,10 @@
                 </el-descriptions-item>
                 <el-descriptions-item label="快递描述">{{scope.row.description}}</el-descriptions-item>
                 <el-descriptions-item label="快递状态">{{scope.row.status}}</el-descriptions-item>
-                <el-descriptions-item label="创建时间">{{scope.row.createTime}}</el-descriptions-item>
-                <el-descriptions-item label="接收时间">{{scope.row.accessTime}}</el-descriptions-item>
-                <el-descriptions-item label="快递送达时间">{{scope.row.deliveryTime}}</el-descriptions-item>
-                <el-descriptions-item label="签收时间">{{scope.row.signTime}}</el-descriptions-item>
+                <el-descriptions-item label="创建时间">{{scope.row.createTimeStr}}</el-descriptions-item>
+                <el-descriptions-item label="接收时间">{{scope.row.accessTimeStr}}</el-descriptions-item>
+                <el-descriptions-item label="快递送达时间">{{scope.row.deliveryTimeStr}}</el-descriptions-item>
+                <el-descriptions-item label="签收时间">{{scope.row.signTimeStr}}</el-descriptions-item>
                 <el-descriptions-item label="评分">{{scope.row.rating}}</el-descriptions-item>
                 <el-descriptions-item label="反馈">{{scope.row.feedback}}</el-descriptions-item>
               </el-descriptions>

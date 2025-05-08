@@ -53,7 +53,7 @@
             <el-menu-item index="/admin">快递员提现申请</el-menu-item>
             <el-menu-item index="/admin">快递员解封申</el-menu-item>
             <el-menu-item index="/admin">快递员提升等级申请</el-menu-item>
-            <el-menu-item index="/admin">快递资源信息</el-menu-item>
+            <el-menu-item index="/admin/information">校园资讯信息</el-menu-item>
             <el-menu-item index="/admin">反馈信息</el-menu-item>
             <el-menu-item index="/admin">公告信息</el-menu-item>
             <el-menu-item index="/admin">用户冲单信息</el-menu-item>
@@ -63,9 +63,9 @@
               <el-icon><User /></el-icon>
               <span>用户信息</span>
             </template>
-            <el-menu-item index="/admin/student">学生信息</el-menu-item>
-            <el-menu-item index="/manger/employee">代取员信息</el-menu-item>
-            <el-menu-item index="/manger/employee">管理员信息</el-menu-item>
+            <el-menu-item index="/admin/students">学生信息</el-menu-item>
+            <el-menu-item index="/admin/couriers">代取员信息</el-menu-item>
+            <el-menu-item index="/admin/admins">管理员信息</el-menu-item>
           </el-sub-menu>
 
         </el-menu>
