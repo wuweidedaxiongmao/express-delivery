@@ -38,7 +38,7 @@
       <div style="width: 200px; border-right: 1px solid #ddd; min-height: calc(100vh - 60px)">
         <el-menu style="border: 0" router :default-active="router.currentRoute.value.path" :default-openeds="['1']">
           <!--          default-openeds="['1']-->
-          <el-menu-item index="/manger/home">
+          <el-menu-item index="/admin/home">
             <el-icon><House /></el-icon>系统首页
           </el-menu-item>
           <el-sub-menu index="1">

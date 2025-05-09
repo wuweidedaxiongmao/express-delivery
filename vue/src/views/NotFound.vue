@@ -38,7 +38,7 @@ const goHome = () => {
     router.push('/student/home');
     return;
   }
-  if((route).path.includes('admin')){
+  if(route.path.includes('admin')){
     router.push('/admin/home');
     return;
   }
