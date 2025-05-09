@@ -182,5 +182,3 @@ create table upgrade_apply
     updated_at    datetime    null comment '更新时间（审核时间）'
 )
     comment '代取员提升等级申请表';
-
-
