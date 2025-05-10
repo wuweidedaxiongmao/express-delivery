@@ -54,9 +54,8 @@
             <el-menu-item index="/admin">快递员解封申</el-menu-item>
             <el-menu-item index="/admin">快递员提升等级申请</el-menu-item>
             <el-menu-item index="/admin/information">校园资讯信息</el-menu-item>
-            <el-menu-item index="/admin">反馈信息</el-menu-item>
+            <el-menu-item index="/admin/feedback">反馈信息</el-menu-item>
             <el-menu-item index="/admin">公告信息</el-menu-item>
-            <el-menu-item index="/admin">用户冲单信息</el-menu-item>
           </el-sub-menu>
           <el-sub-menu index="1">
             <template #title>

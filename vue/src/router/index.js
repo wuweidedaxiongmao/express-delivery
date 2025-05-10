@@ -33,7 +33,8 @@ const router = createRouter({
         {path: 'orders',meta: {title: '代取订单信息'},component:()=>import('../views/admin/Orders.vue')},
         {path: 'couriers',meta: {title: '代取员信息'},component:()=>import('../views/admin/Couriers.vue')},
         {path: 'admins',meta: {title: '管理员信息'},component:()=>import('../views/admin/Admins.vue')},
-        {path: 'information',meta: {title: '校园资讯'},component:()=>import('../views/admin/Information.vue')}
+        {path: 'information',meta: {title: '校园资讯'},component:()=>import('../views/admin/Information.vue')},
+        {path: 'feedback',meta: {title: '反馈信息'},component:()=>import('../views/admin/Feedback.vue')}
       ]
     },
     {
@@ -54,7 +55,7 @@ const router = createRouter({
         {path: 'finishOrders',meta: {title: '已完成订单'},component:()=>import('../views/student/FinishOrders.vue')},
         {path: 'information',meta: {title: '校园资讯'},component:()=>import('../views/student/Information.vue')},
         {path: 'information/detail/:id',component:()=>import('../views/student/Detail.vue')},
-
+        {path: 'feedback',meta: {title: '反馈'},component:()=>import('../views/student/Feedback.vue')},
       ]
     },
     {
