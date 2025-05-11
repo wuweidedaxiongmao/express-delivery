@@ -34,7 +34,8 @@ const router = createRouter({
         {path: 'couriers',meta: {title: '代取员信息'},component:()=>import('../views/admin/Couriers.vue')},
         {path: 'admins',meta: {title: '管理员信息'},component:()=>import('../views/admin/Admins.vue')},
         {path: 'information',meta: {title: '校园资讯'},component:()=>import('../views/admin/Information.vue')},
-        {path: 'feedback',meta: {title: '反馈信息'},component:()=>import('../views/admin/Feedback.vue')}
+        {path: 'feedback',meta: {title: '反馈信息'},component:()=>import('../views/admin/Feedback.vue')},
+        {path: 'announcement',meta: {title: '公告信息'},component:()=>import('../views/admin/Announcement.vue')}
       ]
     },
     {

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.springboot.mapper.AnnouncementMapper">
+
+    <!-- 根据条件查询所有公告 -->
+    <select id="selectAll" resultType="com.example.springboot.entity.Announcement">
+        SELECT * FROM announcement
+        <where>
+            <!-- 按标题模糊查询 -->
+            <if test="title != null and title != ''">
+                title LIKE CONCAT('%', #{title}, '%')
+            </if>
+        </where>
+        ORDER BY id DESC
+    </select>
+
+    <!-- 插入一条新公告 -->
+    <insert id="insert" parameterType="com.example.springboot.entity.Announcement" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO announcement
+            (title, content, created_at, updated_at)
+        VALUES
+            (#{title}, #{content}, #{createdAt}, #{updatedAt})
+    </insert>
+
+    <!-- 根据ID更新公告 -->
+    <update id="updateById" parameterType="com.example.springboot.entity.Announcement">
+        UPDATE announcement
+        <set>
+            <if test="title != null">title = #{title},</if>
+            <if test="content != null">content = #{content},</if>
+            <if test="createdAt != null">created_at = #{createdAt},</if>
+            <if test="updatedAt != null">updated_at = #{updatedAt},</if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+</mapper>
