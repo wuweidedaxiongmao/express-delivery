@@ -8,6 +8,10 @@ const router = createRouter({
       redirect:'/login'
     },
     {
+      path: '/ai',component:()=>import('../views/AiChatPanel.vue')
+    },
+    {path: '/aiAssistant',meta:{title: 'ai助手'},component:()=>import('../views/AiAssistantEntry.vue')},
+    {
       path:'/login',
       name:'Login',
       meta:{title:'欢迎登入'},

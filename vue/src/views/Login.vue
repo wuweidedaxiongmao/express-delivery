@@ -26,15 +26,16 @@
 
     </div>
   </div>
+  <AiAssistantEntry/>
 </template>
 
 <script setup>
 
-import {reactive, ref} from "vue";
+import {onMounted, reactive, ref} from "vue";
 import {ElMessage} from "element-plus";
 import request from "../utils/request";
 import router from "../router";
-
+import AiAssistantEntry from "./AiAssistantEntry.vue";
 const data=reactive({
   form:{ role:'STU' },
   rules:{
@@ -74,6 +75,34 @@ const login=()=>{
     }
   })
 }
+// 动态加载聊天脚本
+onMounted(() => {
+  // 创建 script 标签
+  const script = document.createElement("script");
+  script.src = "https://app.qiaoqiaoyun.com/chat/chat.js";
+  script.id = "e7e007dd52f67fe36365eff636bbffbd";
+  script.async = true;
+
+  // 当脚本加载完成后，初始化聊天
+  script.onload = () => {
+    if (window.createAiChat) {
+      window.createAiChat({
+        appId: "1921471768283877377",
+        iconPosition: "bottom-right",
+      });
+    } else {
+      console.error("createAiChat function not found");
+    }
+  };
+
+  // 将脚本添加到 document
+  document.body.appendChild(script);
+
+  // 清理脚本（可选，避免内存泄漏）
+  return () => {
+    document.body.removeChild(script);
+  };
+});
 </script>
 
 <style scoped>
