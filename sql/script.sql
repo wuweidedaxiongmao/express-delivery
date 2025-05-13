@@ -101,17 +101,18 @@ create table information
 )
     comment '校园资讯/公告信息表';
 
-create table notice
+create table announcement
 (
     id         int auto_increment comment '资讯ID'
         primary key,
     title      varchar(255) null comment '标题',
     content    text         null comment '内容',
-    type       varchar(50)  null comment '类型（资讯/公告）',
     created_at datetime     null comment '创建时间',
     updated_at datetime     null comment '更新时间'
 )
     comment '公告信息表';
+
+
 
 create table orders
 (
