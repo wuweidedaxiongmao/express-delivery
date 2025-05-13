@@ -72,4 +72,12 @@ public class AnnouncementService {
     List<Announcement> list = announcementMapper.selectAll(announcement);
     return PageInfo.of(list);
   }
+
+
+  /**
+   * 获取所有公告，按创建时间倒序
+   */
+  public List<Announcement> selectAllOrdered() {
+    return announcementMapper.selectAllOrdered();
+  }
 }

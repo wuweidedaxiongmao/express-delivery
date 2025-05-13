@@ -16,6 +16,9 @@
         ORDER BY id DESC
     </select>
 
+
+
+
     <!-- 插入一条新公告 -->
     <insert id="insert" parameterType="com.example.springboot.entity.Announcement" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO announcement
@@ -35,5 +38,6 @@
         </set>
         WHERE id = #{id}
     </update>
+
 
 </mapper>

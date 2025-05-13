@@ -1,5 +1,7 @@
 <template>
   <div class="page-container">
+    <!-- 公告栏（轮播展示） -->
+    <AnnouncementBar/>
     <!-- 顶部导航 -->
     <el-header class="header">
       <!-- 左侧 logo -->
@@ -64,6 +66,7 @@
 </template>
 
 <script setup>
+import AnnouncementBar from './AnnouncementBar.vue'
 import router from "../../router";
 import { ref, reactive } from 'vue';
 import { ElHeader, ElRow, ElCol, ElMenu, ElMenuItem, ElButton, ElIcon, ElDropdown, ElDropdownMenu, ElDropdownItem, ElAvatar } from 'element-plus';
