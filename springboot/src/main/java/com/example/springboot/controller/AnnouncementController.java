@@ -5,7 +5,11 @@ import com.example.springboot.entity.Announcement;
 import com.example.springboot.service.AnnouncementService;
 import com.github.pagehelper.PageInfo;
 import jakarta.annotation.Resource;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -82,5 +86,13 @@ public class AnnouncementController {
     return Result.success(pageInfo);
   }
 
+  private static final Logger logger = LoggerFactory.getLogger(AnnouncementController.class);
 
+
+  @GetMapping("/latest")
+  public ResponseEntity<List<Announcement>> getLatest() {
+    List<Announcement> list = announcementService.selectAllOrdered();
+    logger.info("Fetched announcements from DB: {}", list);
+    return ResponseEntity.ok(list);
+  }
 }

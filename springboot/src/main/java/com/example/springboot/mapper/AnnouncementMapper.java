@@ -42,4 +42,7 @@ public interface AnnouncementMapper {
    */
   @Delete("DELETE FROM announcement WHERE id = #{id}")
   void deleteById(Integer id);
+
+  @Select("SELECT * FROM announcement ORDER BY created_at DESC")
+  List<Announcement> selectAllOrdered();
 }
