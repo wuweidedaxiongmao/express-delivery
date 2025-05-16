@@ -46,6 +46,8 @@
         </el-col>
       </el-row>
     </div>
+
+  <AiAssistantEntry :prompt="JSON.stringify(data.user)"/>
 </template>
 
 <script setup>
@@ -55,6 +57,7 @@ import { ElHeader, ElRow, ElCol, ElMenu, ElMenuItem, ElButton, ElIcon, ElDropdow
 import { Search, Bicycle, Plus, Wallet, CaretBottom } from '@element-plus/icons-vue';
 import img1 from '../../assets/imgs/login.jpg'
 import img2 from '../../assets/imgs/img2.png'
+import AiAssistantEntry from "../AiAssistantEntry.vue";
 // 路由实例
 
 // 响应式数据

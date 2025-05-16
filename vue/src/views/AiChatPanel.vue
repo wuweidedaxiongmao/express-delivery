@@ -88,6 +88,12 @@ let eventSource = null;
 const streamingPlaceholder = ref('');
 const BASE_URL = 'http://localhost:9091';
 
+const props=defineProps({
+  prompt: {
+    type: String,
+  },
+});
+
 // 存储每个消息的展开状态
 const expandStates = ref(new Map());
 
@@ -159,8 +165,10 @@ const sendMessage = async () => {
   const currentAiMessageId = messageIdCounter++;
 
   try {
-    const str = '你是一个智能代取快递系统的AI助手，请你用友好的语气回答下面的问题。问题：';
-    const encodedMsg = encodeURIComponent(str + currentInput);
+    console.log(props.prompt);
+    const str = '你叫小星，是一个智能代取快递系统的AI助手，你拥有以下的数据，请你用友好的语气根据数据回答下面的问题。问题：';
+    const data="。数据："+props.prompt
+    const encodedMsg = encodeURIComponent(str + currentInput+data);
 
     if (selectedEndpoint.value === 'v1') {
       const v1Url = `${BASE_URL}/ollama/chat/v1?msg=${encodedMsg}`;

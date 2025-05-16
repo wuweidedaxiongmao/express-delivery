@@ -22,7 +22,7 @@
       </template>
 
       <!-- 这里嵌入你原来的 AI 聊天组件 -->
-      <AiChatPanel />
+      <AiChatPanel :prompt="props.prompt"/>
     </el-dialog>
   </div>
 </template>
@@ -31,6 +31,11 @@
 import { ref } from 'vue';
 import AiChatPanel from './AiChatPanel.vue'; // 你的聊天面板组件
 const dialogVisible = ref(false);
+const props=defineProps({
+  prompt: {
+    type: String,
+  },
+});
 </script>
 
 <style scoped>

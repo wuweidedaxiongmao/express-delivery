@@ -375,6 +375,39 @@ identification通过代取员认证时候，初始化courier的一些数据
 
 #### 5/8
 
+### AI
+
+#### code
+
+子页面接收数据
+
+~~~vue
+<p>接收到的消息: {{ message }}</p>
+<script setup>
+const props = defineProps({
+  message: {
+    type: String,
+  },
+});
+
+// 在 script 内部使用 message
+console.log('接收到的 message:', props.message);
+</script>
+~~~
+
+父页面
+
+~~~vue
+<h1>父页面</h1>
+    <child-page :message="parentMessage"></child-page>
+~~~
+
+#### prompt
+
+1. 当前的用户叫什么名字 
+
+
+
 
 
 ## 知识点

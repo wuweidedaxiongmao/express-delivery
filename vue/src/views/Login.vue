@@ -80,14 +80,14 @@ onMounted(() => {
   // 创建 script 标签
   const script = document.createElement("script");
   script.src = "https://app.qiaoqiaoyun.com/chat/chat.js";
-  script.id = "e7e007dd52f67fe36365eff636bbffbd";
+  script.id = import.meta.env.VITE_QIAOQIAOYUN_SCRIPT_ID;
   script.async = true;
 
   // 当脚本加载完成后，初始化聊天
   script.onload = () => {
     if (window.createAiChat) {
       window.createAiChat({
-        appId: "1921471768283877377",
+        appId: import.meta.env.VITE_QIAOQIAOYUN_APP_ID,
         iconPosition: "bottom-right",
       });
     } else {

@@ -1,7 +1,7 @@
 <template>
   <div class="page-container">
     <!-- 公告栏（轮播展示） -->
-    <AnnouncementBar/>
+<!--    <AnnouncementBar/>-->
     <!-- 顶部导航 -->
     <el-header class="header">
       <!-- 左侧 logo -->
