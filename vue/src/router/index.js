@@ -39,7 +39,8 @@ const router = createRouter({
         {path: 'admins',meta: {title: '管理员信息'},component:()=>import('../views/admin/Admins.vue')},
         {path: 'information',meta: {title: '校园资讯'},component:()=>import('../views/admin/Information.vue')},
         {path: 'feedback',meta: {title: '反馈信息'},component:()=>import('../views/admin/Feedback.vue')},
-        {path: 'announcement',meta: {title: '公告信息'},component:()=>import('../views/admin/Announcement.vue')}
+        {path: 'announcement',meta: {title: '公告信息'},component:()=>import('../views/admin/Announcement.vue')},
+        {path: 'upgradeApply',meta: {title: '代取员等级提升申请'},component:()=>import('../views/admin/UpgradeApply.vue')},
       ]
     },
     {
@@ -59,10 +60,12 @@ const router = createRouter({
         {path: 'deliveryOrders',meta: {title: '派送中订单'},component:()=>import('../views/student/DeliveryOrders.vue')},
         {path: 'finishOrders',meta: {title: '已完成订单'},component:()=>import('../views/student/FinishOrders.vue')},
         {path: 'information',meta: {title: '校园资讯'},component:()=>import('../views/student/Information.vue')},
-        {path: 'information/detail/:id',component:()=>import('../views/student/Detail.vue')},
         {path: 'feedback',meta: {title: '反馈'},component:()=>import('../views/student/Feedback.vue')},
+        {path: 'upgradeApply',meta: {title: '提示等级'},component:()=>import('../views/student/UpgradeApply.vue')},
+        {path: 'courierCommission',meta: {title: '等级信息'},component:()=>import('../views/student/CourierCommission.vue')},
       ]
     },
+    {path: '/student/information/detail/:id',meta: {title: '详细资讯'},component:()=>import('../views/student/Detail.vue')},
     {
       path: '/:pathMatch(.*)*', // 匹配所有未定义的路由
       name: 'NotFound',

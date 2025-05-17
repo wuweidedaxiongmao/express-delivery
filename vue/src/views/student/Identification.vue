@@ -4,9 +4,9 @@
       <div style="display: flex; flex-direction: column; align-items: center;">
         <h2>代取员认证申请</h2>
         <div v-if="data.identification?.status!==null" style="margin-bottom: 20px;">
-          <el-button v-if="data.identification?.status==='Pending'" type="primary" plain>正在审核中</el-button>
-          <el-button v-if="data.identification?.status==='Approved'" type="success" plain>审核通过</el-button>
-          <el-button v-if="data.identification?.status==='Rejected'" type="warning" plain>审核拒绝，请重新提交</el-button>
+          <el-tag v-if="data.identification?.status==='Pending'" type="primary" plain size="large">正在审核中</el-tag>
+          <el-tag v-if="data.identification?.status==='Approved'" type="success" plain size="large">审核通过</el-tag>
+          <el-tag v-if="data.identification?.status==='Rejected'" type="warning" plain size="large">审核拒绝，请重新提交</el-tag>
         </div>
       </div>
 

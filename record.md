@@ -408,6 +408,18 @@ console.log('接收到的 message:', props.message);
 
 
 
+### upgrade_apply
+
+#### 5/16
+
+1. 代取员等级提升申请和认证申请一样，需要selectByCourierID，来确保代取员不能重复提交申请  ✅
+
+2. admin审核的时候，如果成功后，student表中level发生变化，~~并且需要修改缓存~~，因为在admin的界面进行审核，审核通过不需要
+
+   修改缓存，需要update申请表和学生表即可  ✅
+
+3. ~~admin审核成功时候，这条申请删除掉~~  不需要这样做  ✅
+
 
 
 ## 知识点

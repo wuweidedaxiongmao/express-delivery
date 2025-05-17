@@ -2,7 +2,7 @@
   <div>
     <div>
       <el-card class="card">
-        <el-input style="margin-right: 5px; width: 240px" v-model="data.typeName" placeholder="请输入代取员搜索" prefix-icon="Search">
+        <el-input style="margin-right: 5px; width: 240px" v-model="data.courierLevel" placeholder="请输入代取员等级搜索" prefix-icon="Search">
         </el-input>
         <el-button type="primary" plain @click="load()">查询</el-button>
         <el-button type="primary" plain @click="reset()">重置</el-button>

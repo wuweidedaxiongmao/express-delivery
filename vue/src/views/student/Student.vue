@@ -43,6 +43,8 @@
             <el-dropdown-menu>
               <el-dropdown-item @click="router.push('/student/person')">个人中心</el-dropdown-item>
               <el-dropdown-item @click="router.push('/student/address')">地址管理</el-dropdown-item>
+              <el-dropdown-item v-if="ifCourier" @click="router.push('/student/upgradeApply')">提升等级</el-dropdown-item>
+              <el-dropdown-item v-if="ifCourier" @click="router.push('/student/courierCommission')">等级信息</el-dropdown-item>
               <el-dropdown-item @click="logout">退出登录</el-dropdown-item>
             </el-dropdown-menu>
           </template>

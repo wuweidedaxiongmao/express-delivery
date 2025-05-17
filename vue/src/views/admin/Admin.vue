@@ -52,7 +52,7 @@
             <el-menu-item index="/admin/identification">快递员认证申请</el-menu-item>
             <el-menu-item index="/admin">快递员提现申请</el-menu-item>
             <el-menu-item index="/admin">快递员解封申</el-menu-item>
-            <el-menu-item index="/admin">快递员提升等级申请</el-menu-item>
+            <el-menu-item index="/admin/upgradeApply">快递员提升等级申请</el-menu-item>
             <el-menu-item index="/admin/information">校园资讯信息</el-menu-item>
             <el-menu-item index="/admin/feedback">反馈信息</el-menu-item>
             <el-menu-item index="/admin/announcement">公告信息</el-menu-item>

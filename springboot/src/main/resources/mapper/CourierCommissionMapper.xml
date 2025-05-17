@@ -7,7 +7,7 @@
         SELECT * FROM courier_commission
             <where>
                 <if test="courierLevel != null">
-                    courier_level like concat('%',#{courierLevel},'%')
+                    courier_level = #{courierLevel}
                 </if>
             </where>
             order by id asc

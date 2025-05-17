@@ -2,34 +2,29 @@
   <div>
     <div>
       <el-card class="card">
-        <el-input style="margin-right: 5px; width: 240px" v-model="data.name" placeholder="请输入搜索" prefix-icon="Search">
+        <el-input style="margin-right: 5px; width: 240px" v-model="data.courierName" placeholder="请输入姓名搜索" prefix-icon="Search">
         </el-input>
         <el-button type="primary" plain @click="load()">查询</el-button>
-        <el-button type="primary" plain @click="reset()">重置</el-button>
-      </el-card>
-
-      <el-card class="card">
-<!--        <el-button type="primary" plain @click="handleAdd()">新增</el-button>-->
-        <el-button type="primary" plain @click="batchDelete">批量删除</el-button>
-        <!--        <el-button type="primary" plain>upload</el-button>-->
-        <!--        <el-button type="primary" plain>download</el-button>-->
+        <el-select v-model="data.status" style="margin-right: 5px; width: 200px; margin-left: 10px" placeholder="请选择状态查询">
+          <el-option value="Pending" label="待处理"></el-option>
+          <el-option value="Approved" label="已接收"></el-option>
+          <el-option value="Rejected" label="已拒绝"></el-option>
+        </el-select>
+        <el-button type="primary" plain @click="load()">查询</el-button>
+        <el-button type="primary" plain @click="reset()" style="margin-left: 20px">重置</el-button>
       </el-card>
 
       <el-card>
         <el-table :data="data.tableData"  stripe="true" @selection-change="handleSelectChange">
           <el-table-column type="selection" width="55" />
-<!--          <el-table-column prop="id" label="ID"/>-->
-<!--          <el-table-column label="头像">-->
-<!--            <template #default="scope">-->
-<!--              <img v-if="scope.row.avatar" :src="scope.row.avatar" style="width: 40px;height: 40px;border-radius: 50%"/>-->
-<!--            </template>-->
-<!--          </el-table-column>-->
-          <el-table-column prop="name" label="姓名" show-overflow-tooltip="true"/>
-          <el-table-column label="学生证">
-            <template #default="scope">
-              <el-image v-if="scope.row.image" :src="scope.row.image" style="width: 80px" :preview-src-list="[scope.row.image]" preview-teleported/>
-              </template>
-          </el-table-column>
+          <el-table-column prop="id" label="申请ID"/>
+          <el-table-column prop="courierUsername" label="代取员账号" show-overflow-tooltip="true"/>
+          <el-table-column prop="courierName" label="代取员姓名"/>
+          <el-table-column prop="rating" label="平均评分"/>
+          <el-table-column prop="orderCount" label="接单数量"/>
+          <el-table-column prop="currentLevel" label="当前等级"/>
+          <el-table-column prop="targetLevel" label="目标等级"/>
+          <el-table-column prop="description" label="描述" show-overflow-tooltip/>
           <el-table-column prop="status" label="状态" show-overflow-tooltip="true">
             <template v-slot="scope">
               <el-tag type="primary" v-if="scope.row.status==='Pending'">待审核</el-tag>
@@ -37,10 +32,9 @@
               <el-tag type="danger" v-if="scope.row.status==='Rejected'">已拒绝</el-tag>
             </template>
           </el-table-column>
-
           <el-table-column label="操作">
             <template #default="scope">
-              <el-button link type="primary" size="small" :icon="Edit" @click="handleUpdate(scope.row)" v-if="scope.row.status!=='Approved'">
+              <el-button link type="primary" size="small" :icon="Edit" @click="handleUpdate(scope.row)" v-if="scope.row.status==='Pending'">
                 审核
               </el-button>
               <el-button link type="primary" size="small" :icon="Delete" @click="del(scope.row.id)">删除</el-button>
@@ -63,19 +57,24 @@
       </el-card>
     </div>
 
-    <el-dialog v-model="data.formVisible" title="认证信息" width="500" destroy-on-close>
+    <el-dialog v-model="data.formVisible" title="代取员提示等级申请" width="500" destroy-on-close>
       <el-form ref="formRef" :rules="data.rules" :model="data.form" label-width="80px">
-        <el-form-item label="姓名" prop="name">
-          <el-input v-model="data.form.name" autocomplete="off" disabled/>
+        <el-form-item label="姓名" prop="name" style="width: 80%">
+          <el-input v-model="data.form.courierName" autocomplete="off" disabled/>
         </el-form-item>
-        <el-form-item prop="status">
+        <el-form-item label="当前等级" prop="currentLevel" style="width: 80%">
+          <el-input v-model="data.form.currentLevel" autocomplete="off" disabled/>
+        </el-form-item>
+        <el-form-item label="目标等级" prop="targetLevel" style="width: 80%">
+          <el-input v-model="data.form.targetLevel" autocomplete="off" disabled/>
+        </el-form-item>
+        <el-form-item prop="status" style="width: 80%">
           <el-select v-model="data.form.status" style="width: 100%" size="large">
             <el-option value="Pending" label="待审核"></el-option>
             <el-option value="Approved" label="通过"></el-option>
             <el-option value="Rejected" label="拒绝"></el-option>
           </el-select>
         </el-form-item>
-
       </el-form>
       <template #footer>
         <div class="dialog-footer">
@@ -95,25 +94,32 @@ import request from "@/utils/request";
 import {ElMessage, ElMessageBox} from "element-plus";
 
 const data=reactive({
-  name:null,
+  courierName: null,
+  status: 'Pending',
   tableData:[],
   pageNumber:1,
   pageSize:10,
   total:0,
   formVisible:false,
   form:{},
+  courier:{},
   ids:[],
-  student:{}
+  rules:{
+    status:[
+      {required:true, message:"请选择状态", trigger: "blur"}
+    ],
+  }
 })
 
 const formRef=ref()
 
 const load=()=>{
-  request.get('/identification/selectPage',{  //?pageNum=1&pageSize=10
+  request.get('/upgradeApply/selectPage',{  //?pageNum=1&pageSize=10
     params:{
       pageNum:data.pageNumber,
       pageSize:data.pageSize,
-      name:data.name
+      courierName:data.courierName,
+      status:data.status,
     }
   }).then(res=>{
     data.tableData=res.data.list
@@ -124,7 +130,8 @@ const load=()=>{
 load()
 
 const reset=()=>{
-  data.name=null
+  data.courierName=null
+  data.status=null
   load()
 }
 
@@ -133,32 +140,17 @@ const handleAdd=()=>{
   data.form={}
 }
 
-const handleUpdate=(row)=>{
-  // data.form=row  会出现浅拷贝
-  data.form=JSON.parse(JSON.stringify(row)) //深拷贝
-  data.formVisible=true
-}
-
 const update=()=>{
   if(data.form.status==='Approved'){
-    //id===data.form.student_id
-    const url='/student/selectById/'+data.form.studentId
-    request.get(url).then(res=>{
-      data.student=res.data
-      data.student.role='COUR'
-      data.student.addMoney=0
-      data.student.level=1
-      data.student.rating=0
-      data.student.ratingCount=0
-      data.student.orderCount=0
-      request.put('/student/update',data.student)
-    })
+    //成功 update courier
+    data.courier.id=data.form.courierId
+    data.courier.level=data.form.targetLevel
+    request.put('/student/update',data.courier)
   }
-  console.log(data.form)
-  request.put('/identification/update',data.form).then(res=>{
+  request.put('/upgradeApply/update',data.form).then(res=>{
     if(res.code=='200'){
       data.formVisible=false
-      ElMessage.success("修改成功")
+      ElMessage.success("操作成功")
       load() //新增后重新加载数据
     } else{
       ElMessage.error(res.msg)
@@ -166,9 +158,15 @@ const update=()=>{
   })
 }
 
+const handleUpdate=(row)=>{
+  // data.form=row  会出现浅拷贝
+  data.form=JSON.parse(JSON.stringify(row)) //深拷贝
+  data.formVisible=true
+}
+
 const del=(id)=>{
   ElMessageBox.confirm("删除数据后无法恢复，确认删除吗","确认删除",{type:"warning"}).then(()=>{
-    request.delete('/identification/deleteById',{
+    request.delete('/upgradeApply/deleteById',{
       params:{
         id:id
       }
@@ -195,13 +193,8 @@ const batchDelete=()=>{
     ElMessage.warning("请选择要删除的数据")
     return
   }
-  // request.delete('/admin/deleteBatch',{
-  //   params:{
-  //     ids:data.ids
-  //   }
-  // })
   ElMessageBox.confirm("批量删除删除数据后无法恢复，确认删除吗",{type:"warning"}).then(()=>{
-    request.delete('/identification/deleteBatch',{data:data.ids}).then(res=>{
+    request.delete('/upgradeApply/deleteBatch',{data:data.ids}).then(res=>{
       if(res.code=='200'){
         ElMessage.success("操作成功")
         load() //新增后重新加载数据
@@ -210,6 +203,7 @@ const batchDelete=()=>{
       }
     })
   }).catch()
+
 }
 
 </script>
