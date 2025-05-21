@@ -404,7 +404,8 @@ console.log('接收到的 message:', props.message);
 
 #### prompt
 
-1. 当前的用户叫什么名字 
+1. 当前的用户叫什么名字
+2. 将从后端查到的数据作为prompt传入到AI助手中，为了防止数据过多，只传分页查询后的数据，最多只会有10条数据 ❌
 
 
 
@@ -419,6 +420,15 @@ console.log('接收到的 message:', props.message);
    修改缓存，需要update申请表和学生表即可  ✅
 
 3. ~~admin审核成功时候，这条申请删除掉~~  不需要这样做  ✅
+
+### release_apply
+
+**添加黑名单机制**
+
+1. 在student表中添加problem字段用来记录admin拉黑时提供的信息
+2. release_apply表中既有problem字段也要有reason字段用于解封
+
+当学生数据中role为student但是problem中有数据就说明当前用户是被拉黑的用户，可以申请解封
 
 
 
@@ -451,6 +461,10 @@ console.log('接收到的 message:', props.message);
 index.js中的path中的name不能重复
 
 <el-form-item>组件中prop属性用于规则验证
+
+#### @RequestBody注解
+
+作用 ❌
 
 
 

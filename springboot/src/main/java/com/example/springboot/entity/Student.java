@@ -19,6 +19,8 @@ public class Student extends Account{
 	private Double rating; // 平均评分
 	private Integer ratingCount;
 	private Integer orderCount;  // 接单数量
+	private String problem; //admin拉黑代取员时记录的信息
+	private Integer ifBlack;//是否拉黑，1表示被拉黑
 
 	public Integer getMoney() {
 		return money;
@@ -255,5 +257,21 @@ public class Student extends Account{
 
 	public void setRatingCount(Integer ratingCount) {
 		this.ratingCount = ratingCount;
+	}
+
+	public String getProblem() {
+		return problem;
+	}
+
+	public void setProblem(String problem) {
+		this.problem = problem;
+	}
+
+	public Integer getIfBlack() {
+		return ifBlack;
+	}
+
+	public void setIfBlack(Integer ifBlack) {
+		this.ifBlack = ifBlack;
 	}
 }

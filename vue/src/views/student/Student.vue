@@ -22,7 +22,7 @@
           <el-menu-item index="/student/orders">待收订单</el-menu-item>
           <el-menu-item index="/student/finishOrders">已签收订单</el-menu-item>
           <el-menu-item v-if="ifCourier" index="/student/deliveryOrders">派送中订单</el-menu-item>
-          <el-menu-item v-if="ifCourier" index="/student/acceptOrder">我要接单</el-menu-item>
+          <el-menu-item v-if="ifCourier && data.user.ifBlack!==1" index="/student/acceptOrder">我要接单</el-menu-item>
           <el-menu-item index="/student/rank">拼行榜</el-menu-item>
           <el-menu-item index="/student/information">校园资讯</el-menu-item>
           <el-menu-item index="/student/feedback">反馈中心</el-menu-item>
