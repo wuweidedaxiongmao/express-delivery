@@ -2,7 +2,7 @@
   <div class="announcement-bar">
     <transition name="fade" mode="out-in">
       <div class="item" :key="current.id">
-        {{ stripHtml(current.content) }}
+        {{ "公告：" + stripHtml(current.content) }}
       </div>
     </transition>
   </div>
@@ -51,7 +51,7 @@ onBeforeUnmount(() => {
 .announcement-bar {
   background-color: #81aee2;
   color: #333;
-  padding: 10px 16px;
+  padding: 4px 16px;
   min-height: 20px;
   display: flex;
   align-items: center;
