@@ -65,6 +65,7 @@ const router = createRouter({
         {path: 'upgradeApply',meta: {title: '提示等级'},component:()=>import('../views/student/UpgradeApply.vue')},
         {path: 'courierCommission',meta: {title: '等级信息'},component:()=>import('../views/student/CourierCommission.vue')},
         {path: 'releaseApply',meta: {title: '代取员解封'},component:()=>import('../views/student/ReleaseApply.vue')},
+        {path: 'rank',meta: {title: '排行榜'},component:()=>import('../views/student/Rank.vue')},
       ]
     },
     {path: '/student/information/detail/:id',meta: {title: '详细资讯'},component:()=>import('../views/student/Detail.vue')},

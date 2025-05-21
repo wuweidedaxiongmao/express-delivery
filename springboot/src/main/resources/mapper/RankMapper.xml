@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.springboot.mapper.RankMapper">
+
+    <select id="selectAllOrdered" resultType="com.example.springboot.entity.Rank">
+        SELECT username, rating, order_count, role
+        FROM student
+        WHERE role = 'COUR'
+        <choose>
+            <when test="orderBy == 'rating' or orderBy == 'order_count'">
+                ORDER BY
+                ${orderBy}
+                <choose>
+                    <when test="orderDir == 'asc'">ASC</when>
+                    <otherwise>DESC</otherwise>
+                </choose>
+            </when>
+            <otherwise>
+                ORDER BY rating DESC
+            </otherwise>
+        </choose>
+    </select>
+
+
+</mapper>
