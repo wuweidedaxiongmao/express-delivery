@@ -61,7 +61,7 @@ const login=()=>{
             //console.log(res)
             if(res.data.role==='ADMIN'){
               //location.href='/admin/home'
-              router.push('/admin')
+              router.push('/admin/home')
             }else if(res.data.role==='STU'||res.data.role==='COUR'){
               //location.href='student/home'
               router.push('/student/home')

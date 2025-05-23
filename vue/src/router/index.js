@@ -41,7 +41,8 @@ const router = createRouter({
         {path: 'feedback',meta: {title: '反馈信息'},component:()=>import('../views/admin/Feedback.vue')},
         {path: 'announcement',meta: {title: '公告信息'},component:()=>import('../views/admin/Announcement.vue')},
         {path: 'upgradeApply',meta: {title: '代取员等级提升申请'},component:()=>import('../views/admin/UpgradeApply.vue')},
-        {path: 'releaseApply',meta: {title: '代取员解封申请'},component:()=>import('../views/admin/ReleaseApply.vue')}
+        {path: 'releaseApply',meta: {title: '代取员解封申请'},component:()=>import('../views/admin/ReleaseApply.vue')},
+        {path: 'home',meta: {title: '首页'},component:()=>import('../views/admin/Home.vue')},
       ]
     },
     {

@@ -407,7 +407,7 @@ console.log('接收到的 message:', props.message);
 1. 当前的用户叫什么名字
 2. 将从后端查到的数据作为prompt传入到AI助手中，为了防止数据过多，只传分页查询后的数据，最多只会有10条数据 ❌
 
-
+3. 将规则，介绍等信息传入prompt
 
 ### upgrade_apply
 
@@ -425,10 +425,14 @@ console.log('接收到的 message:', props.message);
 
 **添加黑名单机制**
 
-1. 在student表中添加problem字段用来记录admin拉黑时提供的信息
+1. 在student表中添加problem字段用来记录admin拉黑时提供的信息   
 2. release_apply表中既有problem字段也要有reason字段用于解封
 
-当学生数据中role为student但是problem中有数据就说明当前用户是被拉黑的用户，可以申请解封
+~~当学生数据中role为student但是problem中有数据就说明当前用户是被拉黑的用户~~数据库中设置if_black字段用来标明是否被拉黑，可以申请解封
+
+### 提现
+
+将工资里面的虚拟币直接提取到工资里面
 
 
 

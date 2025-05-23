@@ -36,28 +36,32 @@
     <div style="display: flex">
       <!--      left-->
       <div style="width: 200px; border-right: 1px solid #ddd; min-height: calc(100vh - 60px)">
-        <el-menu style="border: 0" router :default-active="router.currentRoute.value.path" :default-openeds="['1']">
-          <!--          default-openeds="['1']-->
+        <el-menu style="border: 0" router :default-active="router.currentRoute.value.path" :default-openeds="['3']">
           <el-menu-item index="/admin/home">
             <el-icon><House /></el-icon>系统首页
           </el-menu-item>
           <el-sub-menu index="1">
             <template #title>
               <el-icon><Document /></el-icon>
-              <span>用户管理</span>
+              <span>业务与配置</span>
             </template>
             <el-menu-item index="/admin/expressType">代取类型信息</el-menu-item>
             <el-menu-item index="/admin/courierCommission">代取员工等级信息</el-menu-item>
             <el-menu-item index="/admin/orders">代取订单信息</el-menu-item>
-            <el-menu-item index="/admin/identification">快递员认证申请</el-menu-item>
-            <el-menu-item index="/admin">快递员提现申请</el-menu-item>
-            <el-menu-item index="/admin/releaseApply">快递员解封申请</el-menu-item>
-            <el-menu-item index="/admin/upgradeApply">快递员提升等级申请</el-menu-item>
             <el-menu-item index="/admin/information">校园资讯信息</el-menu-item>
-            <el-menu-item index="/admin/feedback">反馈信息</el-menu-item>
             <el-menu-item index="/admin/announcement">公告信息</el-menu-item>
           </el-sub-menu>
-          <el-sub-menu index="1">
+          <el-sub-menu index="2">
+            <template #title>
+              <el-icon><EditPen /></el-icon> <span>审批中心</span>
+            </template>
+            <el-menu-item index="/admin/identification">快递员认证申请</el-menu-item>
+<!--            <el-menu-item index="/admin/withdrawalApply">快递员提现申请</el-menu-item>-->
+            <el-menu-item index="/admin/releaseApply">快递员解封申请</el-menu-item>
+            <el-menu-item index="/admin/upgradeApply">快递员提升等级申请</el-menu-item>
+            <el-menu-item index="/admin/feedback">反馈中心</el-menu-item>
+          </el-sub-menu>
+          <el-sub-menu index="3">
             <template #title>
               <el-icon><User /></el-icon>
               <span>用户信息</span>
