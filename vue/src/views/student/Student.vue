@@ -10,7 +10,7 @@
       </div>
 
       <!-- 中间菜单导航 -->
-      <div class="header-center">
+      <div class="header-center" style="display: flex; align-items: center">
         <el-menu
             :default-active="router.currentRoute.value.path"
             router
@@ -26,9 +26,15 @@
           <el-menu-item index="/student/rank">拼行榜</el-menu-item>
           <el-menu-item index="/student/information">校园资讯</el-menu-item>
           <el-menu-item index="/student/feedback">反馈中心</el-menu-item>
-<!--          <el-menu-item index="/student/person">个人中心</el-menu-item>-->
+          <!--          <el-menu-item index="/student/person">个人中心</el-menu-item>-->
+
 
         </el-menu>
+
+        <!-- 公告栏在菜单右侧 -->
+        <div style="margin-left: 20px; flex: 1; display: flex; align-items: center;">
+          <AnnouncementBar />
+        </div>
       </div>
 
       <!-- 右侧用户区域 -->
