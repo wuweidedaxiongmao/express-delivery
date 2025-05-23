@@ -54,4 +54,8 @@ public class OrdersService {
 		return PageInfo.of(list);
 	}
 
+	public Long selectAllCount(){
+		return ordersMapper.selectAllCount();
+	}
+
 }

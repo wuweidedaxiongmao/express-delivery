@@ -124,7 +124,7 @@ const load=()=>{
 load()
 
 const reset=()=>{
-  data.typeName=null
+  data.id=null
   data.status=null
   load()
 }

@@ -22,4 +22,6 @@ public interface OrdersMapper {
 	@Delete("delete from orders where id=#{id}")
 	void deleteById(Integer id);
 
+	@Select("select count(*) from orders")
+	Long selectAllCount();
 }

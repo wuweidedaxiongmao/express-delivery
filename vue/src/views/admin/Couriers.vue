@@ -42,7 +42,9 @@
               <el-button link type="primary" size="small" :icon="Edit" @click="handleUpdate(scope.row)">
                 编辑
               </el-button><br>
-              <el-button link type="primary" size="small" :icon="Delete" @click="del(scope.row.id)">删除</el-button>
+              <el-button link type="primary" size="small" :icon="Delete" @click="del(scope.row.id)">删除</el-button><br>
+              <el-button link type="primary" size="small" :icon="Delete" @click="black(scope.row)" v-if="scope.row.ifBlack!==1">拉黑<br></el-button>
+              <el-tag type="primary" v-if="scope.row.ifBlack===1">已拉黑</el-tag>
             </template>
           </el-table-column>
         </el-table>
@@ -98,14 +100,46 @@
         </div>
       </template>
     </el-dialog>
+
+<!--    拉黑页面-->
+    <el-dialog v-model="data.blackVisible" title="拉黑" width="50%" destroy-on-close>
+      <el-form ref="blackRef" :rules="data.blackRules" :model="data.blackForm" label-width="80px">
+        <el-form-item label="姓名" prop="name">
+          <el-input v-model="data.blackForm.name" autocomplete="off" disabled/>
+        </el-form-item>
+        <el-form-item label="问题描述">
+          <div style="border: 1px solid #ccc; width: 100%">
+            <Toolbar
+                style="border-bottom: 1px solid #ccc"
+                :editor="editorRef"
+                :mode="mode"/>
+            <Editor
+                style="height: 500px; overflow-y: hidden;"
+                v-model="data.blackForm.problem"
+                :mode="mode"
+                :defaultConfig="editorConfig"
+                @onCreated="handleCreated"/>
+          </div>
+        </el-form-item>
+      </el-form>
+      <template #footer>
+        <div class="dialog-footer">
+          <el-button @click="data.blackVisible = false">取消</el-button>
+          <el-button type="primary" @click="confirmBlack()">确认拉黑
+          </el-button>
+        </div>
+      </template>
+    </el-dialog>
   </div>
 </template>
 
 <script setup>
-import {reactive, ref} from "vue";
+import {onBeforeUnmount, reactive, ref, shallowRef} from "vue";
 import {Search,Edit,Delete} from "@element-plus/icons-vue"
 import request from "@/utils/request";
 import {ElMessage, ElMessageBox} from "element-plus";
+import '@wangeditor/editor/dist/css/style.css'
+import {Editor,Toolbar} from '@wangeditor/editor-for-vue'
 
 const data=reactive({
   name:null,
@@ -126,10 +160,41 @@ const data=reactive({
     password:[
       {required:true, message:"请输入密码", trigger: "blur"}
     ],
-  }
+  },
+  blackRules:{
+
+  },
+  blackForm:{},
+  blackVisible:false,
+})
+/* wangEditor5 初始化代码 */
+const baseUrl = 'http://localhost:9091'
+const editorRef = shallowRef() // 编辑器实例，必须用 shallowRef
+const mode = 'default'
+const editorConfig = { MENU_CONF: {} }
+
+// 图片上传配置
+editorConfig.MENU_CONF['uploadImage'] = {
+  server: baseUrl + '/files/wang/upload', // 服务端图片上传接口
+  fieldName: 'file' // 服务端图片上传接口参数
+}
+
+// 组件销毁时，也及时销毁编辑器，否则可能会造成内存泄露
+onBeforeUnmount(() => {
+  const editor = editorRef.value
+  if (editor == null) return
+  editor.destroy()
 })
 
+// 记录实例，重要！
+const handleCreated = (editor) => {
+  editorRef.value = editor
+}
+
+/* wangEditor5 初始化结束 */
+
 const formRef=ref()
+const blackRef=ref()
 
 const load=()=>{
   request.get('/student/selectPage',{  //?pageNum=1&pageSize=10
@@ -247,6 +312,24 @@ const batchDelete=()=>{
 const handleAvatarSuccess=(res)=>{
   //console.log(res)
   data.form.avatar=res.data
+}
+
+const black=(row)=>{
+  data.blackForm.id=row.id
+  data.blackForm.name=row.name
+  data.blackVisible=true;
+}
+const confirmBlack=()=>{
+  data.blackForm.ifBlack=1 //设置拉黑标志
+  request.put('/student/update',data.blackForm).then(res=>{
+    if(res.code=='200'){
+      data.blackVisible=false
+      ElMessage.success("拉黑成功")
+      load() //拉黑后重新加载数据
+    } else{
+      ElMessage.error(res.msg)
+    }
+  })
 }
 
 </script>

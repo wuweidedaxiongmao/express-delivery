@@ -41,6 +41,8 @@ const router = createRouter({
         {path: 'feedback',meta: {title: '反馈信息'},component:()=>import('../views/admin/Feedback.vue')},
         {path: 'announcement',meta: {title: '公告信息'},component:()=>import('../views/admin/Announcement.vue')},
         {path: 'upgradeApply',meta: {title: '代取员等级提升申请'},component:()=>import('../views/admin/UpgradeApply.vue')},
+        {path: 'releaseApply',meta: {title: '代取员解封申请'},component:()=>import('../views/admin/ReleaseApply.vue')},
+        {path: 'home',meta: {title: '首页'},component:()=>import('../views/admin/Home.vue')},
       ]
     },
     {
@@ -63,6 +65,7 @@ const router = createRouter({
         {path: 'feedback',meta: {title: '反馈'},component:()=>import('../views/student/Feedback.vue')},
         {path: 'upgradeApply',meta: {title: '提示等级'},component:()=>import('../views/student/UpgradeApply.vue')},
         {path: 'courierCommission',meta: {title: '等级信息'},component:()=>import('../views/student/CourierCommission.vue')},
+        {path: 'releaseApply',meta: {title: '代取员解封'},component:()=>import('../views/student/ReleaseApply.vue')},
         {path: 'rank',meta: {title: '排行榜'},component:()=>import('../views/student/Rank.vue')},
       ]
     },

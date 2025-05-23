@@ -32,11 +32,17 @@
           </el-button>
           <p>立刻下单</p>
         </el-col>
-        <el-col :span="6" class="action-item">
+        <el-col :span="6" class="action-item" v-if="data.user.role!=='COUR'">
           <el-button circle size="large" @click="router.push('/student/identification')" type="primary">
             <el-icon><Plus /></el-icon>
           </el-button>
           <p>加入代收员</p>
+        </el-col>
+        <el-col :span="6" class="action-item" v-if="data.user.ifBlack===1">
+          <el-button circle size="large" @click="router.push('/student/releaseApply')" type="primary">
+            <el-icon><Unlock /></el-icon>
+          </el-button>
+          <p>申请解封</p>
         </el-col>
         <el-col :span="6" class="action-item">
           <el-button circle size="large" @click="router.push('/front/withdraw')" type="warning">
