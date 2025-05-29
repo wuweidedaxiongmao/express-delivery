@@ -37,6 +37,10 @@
       <div style="text-align: center">
         <el-button type="primary" size="large" @click="updateUser">更新个人信息</el-button>
       </div>
+      <div>
+        <el-button @click="deleteAnnouncement">取消公告</el-button>
+        <el-button @click="addAnnouncement">显示公告</el-button>
+      </div>
     </el-card>
 
   </div>
@@ -75,16 +79,19 @@ const data =reactive({
   }
 })
 
-const emit=defineEmits(['updateUser'])
+const emit=defineEmits(['updateUser','updateAnnouncement'])
 
-// if(data.user.role==='emp'){
-//   request.get('/employee/selectById/'+data.user.id).then(res=>{
-//     data.form=res.data
-//   })
-//   //data.form=data.user
-// } else{
-//   data.form=data.user
-// }
+const deleteAnnouncement=()=>{
+  const value=false
+  emit('updateAnnouncement',value)
+  console.log("emit delete")
+}
+const addAnnouncement=()=>{
+  const value=true
+  emit('updateAnnouncement',value)
+  console.log("emit add")
+}
+
 data.form=data.user
 
 const updateUser=()=>{

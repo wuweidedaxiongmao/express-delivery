@@ -32,7 +32,7 @@
         </el-menu>
 
         <!-- 公告栏在菜单右侧 -->
-        <div style="margin-left: 20px; flex: 1; display: flex; align-items: center;">
+        <div class="announcement-container" v-if="data.ifAnnouncement">
           <AnnouncementBar />
         </div>
       </div>
@@ -68,7 +68,7 @@
 
     <!-- 底部操作区域 -->
     <div>
-      <RouterView @updateUser="updateUser"/>
+      <RouterView @updateUser="updateUser" @updateAnnouncement="updateValue"/>
     </div>
   </div>
 </template>
@@ -90,9 +90,16 @@ const data = reactive({
   //   avatar: 'https://example.com/avatar.png'
   // }
   user:JSON.parse(localStorage.getItem('user')),
+  ifAnnouncement:true,
 });
 
 const ifCourier=data.user.role==='COUR';
+
+//更新公告值
+//value是子组件通过$emit传递过来的数据
+const updateValue=(value)=>{
+  data.ifAnnouncement=value
+}
 
 // 退出登录方法
 const logout = () => {
@@ -208,5 +215,13 @@ if(data.user.role!=='STU'&&data.user.role!='COUR'){
   margin-top: 5px;
   font-size: 15px;
   color: black;
+}
+
+.announcement-container{
+  position: absolute;
+  top: 0px; /* 调整与顶部的距离 */
+  left: 49%; /* 保持水平位置不变，可根据需要调整 */
+  margin: 0;
+  padding: 0;
 }
 </style>
