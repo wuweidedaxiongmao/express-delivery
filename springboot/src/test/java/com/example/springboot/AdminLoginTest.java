@@ -14,6 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 public class AdminLoginTest {
 
+    //依赖注入
     @Autowired
     private AdminService adminService;
 

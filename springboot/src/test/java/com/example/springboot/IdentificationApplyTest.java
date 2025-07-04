@@ -3,12 +3,18 @@ package com.example.springboot;
 import com.example.springboot.entity.Identification;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MockMvcBuilder;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 
 import java.time.LocalDateTime;
 
@@ -22,8 +28,13 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 public class IdentificationApplyTest {
 
     @Autowired
+    private WebApplicationContext webApplicationContext;
     private MockMvc mockMvc;
 
+    @BeforeEach
+    void setup(){
+        mockMvc= MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+    }
     // 手动注册 JavaTimeModule 支持 LocalDateTime 的序列化
     private final ObjectMapper objectMapper = new ObjectMapper().registerModule(new JavaTimeModule());
 

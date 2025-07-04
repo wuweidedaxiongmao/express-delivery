@@ -25,6 +25,17 @@ create table admin
 )
     comment '管理员信息表';
 
+create table announcement
+(
+    id         int auto_increment comment '资讯ID'
+        primary key,
+    title      varchar(255) null comment '标题',
+    content    text         null comment '内容',
+    created_at datetime     null comment '创建时间',
+    updated_at datetime     null comment '更新时间'
+)
+    comment '公告信息表';
+
 create table cash_record
 (
     id         int auto_increment comment '记录ID'
@@ -94,25 +105,12 @@ create table information
     id         int auto_increment comment '资讯ID'
         primary key,
     title      varchar(255) null comment '标题',
-    content    text         null comment '内容',
-    type       varchar(50)  null comment '类型（资讯/公告）',
+    content    longtext     null comment '内容',
+    img        varchar(255) null comment '资讯封面',
     created_at datetime     null comment '创建时间',
     updated_at datetime     null comment '更新时间'
 )
-    comment '校园资讯/公告信息表';
-
-create table announcement
-(
-    id         int auto_increment comment '资讯ID'
-        primary key,
-    title      varchar(255) null comment '标题',
-    content    text         null comment '内容',
-    created_at datetime     null comment '创建时间',
-    updated_at datetime     null comment '更新时间'
-)
-    comment '公告信息表';
-
-
+    comment '校园资讯';
 
 create table orders
 (
@@ -139,12 +137,16 @@ create table release_apply
 (
     id         int auto_increment comment '申请ID'
         primary key,
-    courier_id int         null comment '代取员ID（指向student表的id）',
-    reason     text        null comment '解封原因',
-    status     varchar(50) null comment '状态（待审核/已通过/已拒绝）',
-    admin_id   int         null comment '审核管理员ID',
-    created_at datetime    null comment '申请时间',
-    updated_at datetime    null comment '更新时间（审核时间）'
+    courier_id int          null comment '代取员ID（指向student表的id）',
+    username   varchar(255) null comment '代取员用户名',
+    name       varchar(255) null comment '代取员姓名',
+    problem    longtext     null comment '代取员问题，与student表中problem字段一致',
+    reason     longtext     null comment '解封原因，代取员提交理由
+problem和reason都是富文本',
+    status     varchar(50)  null comment '状态（待审核/已通过/已拒绝）',
+    admin_id   int          null comment '审核管理员ID',
+    created_at datetime     null comment '申请时间',
+    updated_at datetime     null comment '更新时间（审核时间）'
 )
     comment '代取员解封申请表';
 
@@ -165,6 +167,9 @@ create table student
     rating       double(5, 3) null comment '平均评分（基于订单，仅对代取员有效）',
     rating_count int          null comment '用于记录评分订单数来计算平均评分',
     order_count  int          null comment '接单数量（用于排行榜，仅对代取员有效）',
+    problem      longtext     null comment 'admin拉黑代取员是记录的信息，代取员根据相关信息进行改善，
+当解决完问题后，设置为no problem',
+    if_black     int          null comment '是否拉黑，1表示被拉黑，0或其他代表没有被拉黑',
     created_at   datetime     null comment '注册时间',
     updated_at   datetime     null comment '更新时间'
 )
@@ -174,12 +179,15 @@ create table upgrade_apply
 (
     id            int auto_increment comment '申请ID'
         primary key,
-    courier_id    int         null comment '代取员ID（指向student表的id）',
-    current_level int         null comment '当前等级',
-    target_level  int         null comment '目标等级',
-    status        varchar(50) null comment '状态（待审核/已通过/已拒绝）',
-    admin_id      int         null comment '审核管理员ID',
-    created_at    datetime    null comment '申请时间',
-    updated_at    datetime    null comment '更新时间（审核时间）'
+    courier_id    int          null comment '代取员ID（指向student表的id）',
+    current_level int          null comment '当前等级',
+    target_level  int          null comment '目标等级',
+    description   varchar(255) null comment '关于等级提升申请的相关描述',
+    status        varchar(50)  null comment '状态（待审核/已通过/已拒绝）',
+    admin_id      int          null comment '审核管理员ID',
+    created_at    datetime     null comment '申请时间',
+    updated_at    datetime     null comment '更新时间（审核时间）'
 )
     comment '代取员提升等级申请表';
+
+
